@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View">
+
+    <SolidColorBrush x:Key="WindowBackgroundColor">#FFA4A2A2</SolidColorBrush>
+
+
+</ResourceDictionary>
