@@ -4,7 +4,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
     using View.Service;
 
-    public class MappingSetViewModel : ObservableObject
+    public class MappingSetViewModel : ViewModelBase
     {
         private IFileDialog _fileDialog;
         private string _filePath;

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
-    public class ObservableObject : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
