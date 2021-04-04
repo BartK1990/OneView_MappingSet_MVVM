@@ -8,10 +8,20 @@ using System.Windows;
 
 namespace OneView_MappingSet_MVVM.UI
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+    using View.Service;
+
     public partial class App : Application
     {
+
+        public IFileDialog FileDialog;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Application objects initialization
+            FileDialog = new FileDialog();
+
+        }
     }
 }

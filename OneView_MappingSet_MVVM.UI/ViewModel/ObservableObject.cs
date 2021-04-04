@@ -1,10 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq.Expressions;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
-    using System.ComponentModel;
-    using System.Linq.Expressions;
-
     public class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

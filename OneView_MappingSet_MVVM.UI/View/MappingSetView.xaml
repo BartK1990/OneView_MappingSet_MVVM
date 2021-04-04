@@ -9,7 +9,7 @@
       Title="MappingSetView">
 
     <Grid>
-        <Button x:Name="OpenExcelFileButton" Content="Open Standard Tag list" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="140" Height="30"/>
+        <Button x:Name="OpenExcelFileButton" Command="{Binding OpenExcelFileCommand}" Content="Open Standard Tag list" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="140" Height="30"/>
 
     </Grid>
 </Page>
