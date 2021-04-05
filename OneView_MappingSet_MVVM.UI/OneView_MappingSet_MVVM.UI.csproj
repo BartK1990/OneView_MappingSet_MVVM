@@ -12,4 +12,9 @@
     <Folder Include="Converters\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OneView_MappingSet_MVVM.DataAccess\OneView_MappingSet_MVVM.DataAccess.csproj" />
+    <ProjectReference Include="..\OneView_MappingSet_MVVM.Model\OneView_MappingSet_MVVM.Model.csproj" />
+  </ItemGroup>
+
 </Project>
