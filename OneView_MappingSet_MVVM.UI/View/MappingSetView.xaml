@@ -3,13 +3,22 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View"
+      xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View" 
+      xmlns:fa5="http://schemas.fontawesome.com/icons/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MappingSetView">
 
     <Grid>
-        <Button x:Name="OpenExcelFileButton" Command="{Binding OpenExcelFileCommand}" Content="Open Standard Tag list" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="140" Height="30"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px" />
+            <RowDefinition Height="50px" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button x:Name="OpenExcelFileButton" Command="{Binding OpenExcelFileCommand}" Content="Open Standard Tag list" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"  Width="140" Height="30"/>
+            <fa5:SvgAwesome Icon="Solid_Fan" Spin="True" SpinDuration="2" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Foreground="#FF2B2B2B"/>
+        </DockPanel>
 
     </Grid>
 </Page>
