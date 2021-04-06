@@ -1,21 +1,20 @@
 ﻿using OfficeOpenXml;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
     public class ExcelAccess<T>
     {
-        public virtual ICollection<T> GetSheetData(string path, string sheetName)
+        protected string SheetName;
+
+        protected virtual ICollection<T> GetSheetData(string path)
         {
             using (Stream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (ExcelPackage package = new ExcelPackage(stream))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetName];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[SheetName];
                     return ReadSheetData(worksheet, worksheet.Dimension.Rows, worksheet.Dimension.Columns);
                 }
             }

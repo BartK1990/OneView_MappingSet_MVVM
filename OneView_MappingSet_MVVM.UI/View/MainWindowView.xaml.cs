@@ -28,7 +28,7 @@ namespace OneView_MappingSet_MVVM.UI.View
             mappingSetView = new MappingSetView();
 
             // Initialize ViewModel and assign to DataContext for window/page
-            mappingSetView.DataContext = new ViewModel.MappingSetViewModel(curApp.FileDialog);
+            mappingSetView.DataContext = new ViewModel.MappingSetViewModel(curApp.FileDialog, curApp.StandardMappingSetRepository);
 
             //Only one view for now
             WindowContent.Navigate(mappingSetView);

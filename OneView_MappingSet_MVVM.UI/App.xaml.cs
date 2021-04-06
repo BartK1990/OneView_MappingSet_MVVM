@@ -9,11 +9,14 @@ using System.Windows;
 namespace OneView_MappingSet_MVVM.UI
 {
     using View.Service;
+    using Data.Repositories;
+    using OneView_MappingSet_MVVM.DataAccess;
 
     public partial class App : Application
     {
 
         public IFileDialog FileDialog;
+        public IStandardMappingSetRepository StandardMappingSetRepository;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -21,6 +24,7 @@ namespace OneView_MappingSet_MVVM.UI
 
             // Application objects initialization
             FileDialog = new FileDialog();
+            StandardMappingSetRepository = new StandardMappingSetRepository(new StandardMappingSetExcelAccess());
 
         }
     }

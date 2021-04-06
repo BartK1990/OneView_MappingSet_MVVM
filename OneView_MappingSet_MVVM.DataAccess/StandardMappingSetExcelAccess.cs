@@ -1,10 +1,11 @@
 ﻿using OfficeOpenXml;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
     using OneView_MappingSet_MVVM.Model;
+
 
     public class StandardMappingSetExcelAccess : ExcelAccess<Iec6140025Tag>
     {
@@ -19,9 +20,26 @@ namespace OneView_MappingSet_MVVM.DataAccess
 
         private const int MaxColNum = CollectorTypeColNum;
 
-        public override ICollection<Iec6140025Tag> GetSheetData(string path, string sheetName)
+        public StandardMappingSetExcelAccess()
         {
-            return base.GetSheetData(path, sheetName);
+            SheetName = "SCI Standard Mappingset"; // Sheet name used in base class in GetSheetData
+        }
+
+        public async Task<StandardMappingSet> GetStandardMappingSetAsync(string path)
+        {
+            return await Task.Run(() => GetStandardMappingSet(path));
+        }
+
+        public StandardMappingSet GetStandardMappingSet(string path)
+        {
+            StandardMappingSet standardMappingSet = new StandardMappingSet();
+            standardMappingSet.TaglistCollection = GetSheetData(path);
+            return standardMappingSet;
+        }
+
+        protected override ICollection<Iec6140025Tag> GetSheetData(string path)
+        {
+            return base.GetSheetData(path);
         }
 
         protected override ICollection<Iec6140025Tag> ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
