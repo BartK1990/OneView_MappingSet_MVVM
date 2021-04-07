@@ -7,7 +7,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
     using OneView_MappingSet_MVVM.Model;
 
 
-    public class StandardMappingSetExcelAccess : ExcelAccess<Iec6140025Tag>
+    public class StandardTagListExcelAccess : ExcelAccess<Iec6140025Tag>
     {
         private const int TagnameColNum = 1;
         private const int PresentationNameColNum = 5;
@@ -18,21 +18,20 @@ namespace OneView_MappingSet_MVVM.DataAccess
         private const int DataTypeColNum = 10;
         private const int CollectorTypeColNum = 11;
 
-        private const int MaxColNum = CollectorTypeColNum;
-
-        public StandardMappingSetExcelAccess()
+        public StandardTagListExcelAccess()
         {
             SheetName = "SCI Standard Mappingset"; // Sheet name used in base class in GetSheetData
+            MaxColNum = CollectorTypeColNum;
         }
 
-        public async Task<StandardMappingSet> GetStandardMappingSetAsync(string path)
+        public async Task<StandardTagList> GetStandardMappingSetAsync(string path)
         {
             return await Task.Run(() => GetStandardMappingSet(path));
         }
 
-        public StandardMappingSet GetStandardMappingSet(string path)
+        public StandardTagList GetStandardMappingSet(string path)
         {
-            StandardMappingSet standardMappingSet = new StandardMappingSet();
+            StandardTagList standardMappingSet = new StandardTagList();
             standardMappingSet.TaglistCollection = GetSheetData(path);
             return standardMappingSet;
         }

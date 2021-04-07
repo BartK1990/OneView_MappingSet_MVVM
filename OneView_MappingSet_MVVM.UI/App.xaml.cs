@@ -16,7 +16,7 @@ namespace OneView_MappingSet_MVVM.UI
     {
 
         public IFileDialog FileDialog;
-        public IStandardMappingSetRepository StandardMappingSetRepository;
+        public IStandardTagListRepository StandardMappingSetRepository;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -24,7 +24,7 @@ namespace OneView_MappingSet_MVVM.UI
 
             // Application objects initialization
             FileDialog = new FileDialog();
-            StandardMappingSetRepository = new StandardMappingSetRepository(new StandardMappingSetExcelAccess());
+            StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
 
         }
     }

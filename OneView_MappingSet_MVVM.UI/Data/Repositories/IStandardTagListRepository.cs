@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface IStandardMappingSetRepository
+    public interface IStandardTagListRepository
     {
-        Task<StandardMappingSet> GetDataAsync(string path);
+        Task<StandardTagList> GetDataAsync(string path);
     }
 }

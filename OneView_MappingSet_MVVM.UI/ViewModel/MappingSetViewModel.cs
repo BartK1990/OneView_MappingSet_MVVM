@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using OneView_MappingSet_MVVM.DataAccess;
+using System;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
@@ -8,18 +8,23 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
     public class MappingSetViewModel : ViewModelBase
     {
-        private IStandardMappingSetRepository _standardMappingSetRepository;
-        private IFileDialog _fileDialog;
-        private string _filePath;
+        private readonly IStandardTagListRepository _standardMappingSetRepository;
+        private readonly IFileDialog _fileDialog;
 
-        private bool fileLoading;
-        public bool FileLoading
+        private bool standardTagListLoading;
+        public bool StandardTagListLoading
         {
-            get => this.fileLoading;
-            set { this.SetAndNotify(ref this.fileLoading, value, () => this.FileLoading); }
+            get => this.standardTagListLoading;
+            set { this.SetAndNotify(ref this.standardTagListLoading, value, () => this.StandardTagListLoading); }
         }
-
-        public MappingSetViewModel(IFileDialog fileDialog, IStandardMappingSetRepository standardMappingSetRepository)
+        private string logOutput;
+        public string LogOutput
+        {
+            get => this.logOutput;
+            set { this.SetAndNotify(ref this.logOutput, value, () => this.LogOutput); }
+        }
+       
+        public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository)
         {
             this._standardMappingSetRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;
@@ -31,23 +36,29 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             get
             {
                 return _openExcelFileCommand ?? (_openExcelFileCommand = new RelayCommand(
-                           x =>
-                           {
-                               var filePath = _fileDialog.OpenExcelFile();
-                               if (!string.IsNullOrEmpty(filePath))
-                               {
-                                   _filePath = filePath;
-                               }
-                               OpenExcelFileHelperAsync(filePath);
-                           }, x => true));
+                    x =>
+                    {
+                    var filePath = _fileDialog.OpenExcelFile();
+                        if (!string.IsNullOrEmpty(filePath))
+                        {
+                            OpenExcelFileHelperAsync(filePath);
+                        }
+                    }, x => true));
             }
         }
 
         private async void OpenExcelFileHelperAsync(string path)
         {
-            FileLoading = true;
-            await _standardMappingSetRepository.GetDataAsync(path);
-            FileLoading = false;
+            StandardTagListLoading = true;
+            try
+            {
+                await _standardMappingSetRepository.GetDataAsync(path);
+            }
+            catch (Exception e)
+            {
+                LogOutput = e.Message;
+            }    
+            StandardTagListLoading = false;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
     public class ExcelAccess<T>
     {
         protected string SheetName;
+        protected int MaxColNum;
 
         protected virtual ICollection<T> GetSheetData(string path)
         {
