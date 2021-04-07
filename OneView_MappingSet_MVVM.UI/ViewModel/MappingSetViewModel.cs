@@ -5,6 +5,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
     using View.Service;
     using Data.Repositories;
+    using System.Threading.Tasks;
 
     public class MappingSetViewModel : ViewModelBase
     {
@@ -57,7 +58,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             catch (Exception e)
             {
                 LogOutput = e.Message;
-            }    
+            }
             StandardTagListLoading = false;
         }
     }
