@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace OneView_MappingSet_MVVM.UI
 {
-    using View.Service;
     using Data.Repositories;
     using OneView_MappingSet_MVVM.DataAccess;
+    using View.Services;
+    using ViewModel.Services;
 
     public partial class App : Application
     {
 
         public IFileDialog FileDialog;
         public IStandardTagListRepository StandardMappingSetRepository;
+        public IErrorHandler ErrorHandler;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -25,6 +21,7 @@ namespace OneView_MappingSet_MVVM.UI
             // Application objects initialization
             FileDialog = new FileDialog();
             StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
+            ErrorHandler = new ErrorHandler();
 
         }
     }

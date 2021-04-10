@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace OneView_MappingSet_MVVM.UI.ViewModel
-{  
+namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
+{
     public class RelayCommand : ICommand
     {
         private Action<object> execute;

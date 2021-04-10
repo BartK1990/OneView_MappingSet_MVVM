@@ -1,16 +1,22 @@
-﻿using System.Windows.Input;
-using System;
+﻿using System;
+using System.Windows.Input;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
-    using View.Service;
+    using Commands;
     using Data.Repositories;
+    using ViewModel.Services;
+    using View.Services;
+    using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
     public class MappingSetViewModel : ViewModelBase
     {
         private readonly IStandardTagListRepository _standardMappingSetRepository;
         private readonly IFileDialog _fileDialog;
+        private readonly IErrorHandler _errorHandler;
+
+        public ObservableCollection<string> LoggerItems { get; set; } = new ObservableCollection<string>();
 
         private bool standardTagListLoading;
         public bool StandardTagListLoading
@@ -25,41 +31,43 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             set { this.SetAndNotify(ref this.logOutput, value, () => this.LogOutput); }
         }
        
-        public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository)
+        public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
         {
             this._standardMappingSetRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;
-        }
+            this._errorHandler = errorHandler;
+            //this.LoggerItems = (ObservableCollection<string>)this._errorHandler.ErrorList;
 
-        private ICommand _openExcelFileCommand;
-        public ICommand OpenExcelFileCommand
-        {
-            get
-            {
-                return _openExcelFileCommand ?? (_openExcelFileCommand = new RelayCommand(
-                    x =>
-                    {
-                    var filePath = _fileDialog.OpenExcelFile();
-                        if (!string.IsNullOrEmpty(filePath))
-                        {
-                            OpenExcelFileHelperAsync(filePath);
-                        }
-                    }, x => true));
-            }
+            // Commands
+            OpenExcelFileCommand = new AsyncCommand(OnOpenExcelFile, OnOpenExcelFileCanExecute);
         }
-
-        private async void OpenExcelFileHelperAsync(string path)
+        public IAsyncCommand OpenExcelFileCommand { get; private set; }
+        private async Task OnOpenExcelFile()
         {
-            StandardTagListLoading = true;
             try
             {
-                await _standardMappingSetRepository.GetDataAsync(path);
+                var filePath = _fileDialog.OpenExcelFile();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    StandardTagListLoading = true;
+                    await _standardMappingSetRepository.GetDataAsync(filePath);
+                    Log("Standard mapping set Loaded");
+                }
             }
-            catch (Exception e)
+            finally
             {
-                LogOutput = e.Message;
+                StandardTagListLoading = false;
             }
-            StandardTagListLoading = false;
+        }
+        private bool OnOpenExcelFileCanExecute()
+        {
+            return true;
+        }
+
+        private void Log(string log)
+        {
+            var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            LoggerItems.Add($"{time}|{log}");
         }
     }
 }

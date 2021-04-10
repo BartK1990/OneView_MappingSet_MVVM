@@ -3,6 +3,6 @@
                     xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View">
 
     <SolidColorBrush x:Key="WindowBackgroundColor">#FFA4A2A2</SolidColorBrush>
-
-
+    <SolidColorBrush x:Key="BlockBackgroundColor">#6D6D6D</SolidColorBrush>
+    
 </ResourceDictionary>

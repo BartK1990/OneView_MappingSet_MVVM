@@ -1,4 +1,4 @@
-﻿namespace OneView_MappingSet_MVVM.UI.View.Service
+﻿namespace OneView_MappingSet_MVVM.UI.View.Services
 {
     public interface IFileDialog
     {
