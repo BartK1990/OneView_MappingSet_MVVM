@@ -25,16 +25,14 @@
             <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding StandardTagListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Foreground="#FF2B2B2B"/>
         </DockPanel>
         <DockPanel Grid.Row="2" Margin="10 10 10 10">
-            <!--<ScrollViewer Name="LogScroller" Margin="0" Background="#6D6D6D">
-                <TextBlock Name="LogTextBlock" Text="{Binding Path=LogOutput, Mode=OneWay}" Foreground="White" FontFamily="Consolas" TextWrapping="WrapWithOverflow" Padding="10"/>
-            </ScrollViewer>-->
-            <!--<DataGrid AutoGenerateColumns="False" x:Name="Logger" ItemsSource="{Binding LoggerItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                      Background="{StaticResource BlockBackgroundColor}" FontFamily="Consolas" CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Log" IsReadOnly="True" Width="*"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>-->
-            <ListView x:Name="Logger" ItemsSource="{Binding LoggerItems}" FontFamily="Consolas" Background="{StaticResource BlockBackgroundColor}"/>
+            <ListView x:Name="Logger" ItemsSource="{Binding LoggerItems}" FontFamily="Consolas" Background="{StaticResource BlockBackgroundColor}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}">
+                        </TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </DockPanel>
     </Grid>
 </Page>

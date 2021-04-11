@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
     using Commands;
     using Data.Repositories;
-    using ViewModel.Services;
+    using Event;
     using View.Services;
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
+    using ViewModel.Services;
 
     public class MappingSetViewModel : ViewModelBase
     {
@@ -36,11 +36,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._standardMappingSetRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;
             this._errorHandler = errorHandler;
-            //this.LoggerItems = (ObservableCollection<string>)this._errorHandler.ErrorList;
+            this._errorHandler.NewError += LogNewError;
 
             // Commands
-            OpenExcelFileCommand = new AsyncCommand(OnOpenExcelFile, OnOpenExcelFileCanExecute);
+            OpenExcelFileCommand = new AsyncCommand(OnOpenExcelFile, OnOpenExcelFileCanExecute, this._errorHandler);
         }
+
         public IAsyncCommand OpenExcelFileCommand { get; private set; }
         private async Task OnOpenExcelFile()
         {
@@ -68,6 +69,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             LoggerItems.Add($"{time}|{log}");
+        }
+        private void LogNewError(object sender, NewErrorEventArgs e)
+        {
+            Log(e.errorMessage);
         }
     }
 }
