@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OneView_MappingSet_MVVM.UI.View.UserControl
+namespace OneView_MappingSet_MVVM.UI.View.UserControls
 {
     /// <summary>
     /// Interaction logic for ListViewCopy.xaml
