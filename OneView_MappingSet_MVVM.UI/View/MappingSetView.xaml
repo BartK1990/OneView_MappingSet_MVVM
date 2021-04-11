@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View"
+      xmlns:uc="clr-namespace:OneView_MappingSet_MVVM.UI.View.UserControls"
       xmlns:fa5="http://schemas.fontawesome.com/icons/" 
       xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.Converters"
       mc:Ignorable="d" 
@@ -24,12 +25,11 @@
             <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding StandardTagListLoading}" SpinDuration="2" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Foreground="#FF2B2B2B"/>
             <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding StandardTagListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Foreground="#FF2B2B2B"/>
         </DockPanel>
-        <DockPanel Grid.Row="2" Margin="10 10 10 10">
+        <DockPanel Grid.Row="2" Margin="10 10 10 10" >
             <ListView x:Name="Logger" ItemsSource="{Binding LoggerItems}" FontFamily="Consolas" Background="{StaticResource BlockBackgroundColor}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}">
-                        </TextBlock>
+                        <TextBox Text="{Binding Path=.}" Background="{StaticResource BlockBackgroundColor}" IsReadOnly="True" BorderThickness="0"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

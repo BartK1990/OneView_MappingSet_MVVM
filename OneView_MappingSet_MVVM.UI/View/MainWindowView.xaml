@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View"
         mc:Ignorable="d"
-        Title="MainWindowView" Height="400" Width="400" MinHeight="400" MinWidth="400" Background="{StaticResource WindowBackgroundColor}">
+        Title="Mapping set generator" 
+        Height="400" Width="400" MinHeight="400" MinWidth="400" Background="{StaticResource WindowBackgroundColor}">
     <Grid>
         <DockPanel Grid.ColumnSpan="2">
             <Frame x:Name="WindowContent"/>
