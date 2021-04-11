@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface IStandardTagListRepository
+    public interface IStandardTagListRepository : IExcelRepositoryOfT<StandardTagList>
     {
-        Task<StandardTagList> GetDataAsync(string path);
     }
 }

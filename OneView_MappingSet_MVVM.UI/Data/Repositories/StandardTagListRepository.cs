@@ -5,16 +5,13 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
     using OneView_MappingSet_MVVM.DataAccess;
     using OneView_MappingSet_MVVM.Model;
 
-    public class StandardTagListRepository : IStandardTagListRepository
+    public class StandardTagListRepository : ExcelRepositoryOfT<StandardTagList, StandardTagListExcelAccess> , IStandardTagListRepository
     {
-        private StandardTagListExcelAccess ExcelAccess;
-
-        public StandardTagListRepository(StandardTagListExcelAccess excelAccess)
+        public StandardTagListRepository(StandardTagListExcelAccess excelAccess) : base(excelAccess)
         {
-            ExcelAccess = excelAccess;
         }
 
-        public async Task<StandardTagList> GetDataAsync(string path)
+        public override async Task<StandardTagList> GetDataAsync(string path)
         {
             return await ExcelAccess.GetStandardMappingSetAsync(path);
         }

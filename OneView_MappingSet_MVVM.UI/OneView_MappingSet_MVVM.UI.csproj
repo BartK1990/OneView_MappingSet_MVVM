@@ -16,8 +16,4 @@
     <ProjectReference Include="..\OneView_MappingSet_MVVM.Model\OneView_MappingSet_MVVM.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\UserControls\" />
-  </ItemGroup>
-
 </Project>

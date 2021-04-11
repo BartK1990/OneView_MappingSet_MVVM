@@ -39,11 +39,13 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._errorHandler.NewError += LogNewError;
 
             // Commands
-            OpenExcelFileCommand = new AsyncCommand(OnOpenExcelFile, OnOpenExcelFileCanExecute, this._errorHandler);
+            OpenStandardTagListCommand = new AsyncCommand(OnOpenStandardTagList, OnOpenStandardTagListCanExecute, this._errorHandler);
+            OpenSourceItemDictionaryCommand = new AsyncCommand(OnOpenSourceItemDictionary, OnOpenSourceItemDictionaryCanExecute, this._errorHandler);
+            OpenSourceItemListCommand = new AsyncCommand(OnOpenSourceItemList, OnOpenSourceItemListCanExecute, this._errorHandler);
         }
 
-        public IAsyncCommand OpenExcelFileCommand { get; private set; }
-        private async Task OnOpenExcelFile()
+        public IAsyncCommand OpenStandardTagListCommand { get; private set; }
+        private async Task OnOpenStandardTagList()
         {
             try
             {
@@ -60,7 +62,53 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 StandardTagListLoading = false;
             }
         }
-        private bool OnOpenExcelFileCanExecute()
+        private bool OnOpenStandardTagListCanExecute()
+        {
+            return true;
+        }
+
+        public IAsyncCommand OpenSourceItemDictionaryCommand { get; private set; }
+        private async Task OnOpenSourceItemDictionary()
+        {
+            try
+            {
+                var filePath = _fileDialog.OpenExcelFile();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    StandardTagListLoading = true;
+                    await _standardMappingSetRepository.GetDataAsync(filePath);
+                    Log("Source item dictionary Loaded");
+                }
+            }
+            finally
+            {
+                StandardTagListLoading = false;
+            }
+        }
+        private bool OnOpenSourceItemDictionaryCanExecute()
+        {
+            return true;
+        }
+
+        public IAsyncCommand OpenSourceItemListCommand { get; private set; }
+        private async Task OnOpenSourceItemList()
+        {
+            try
+            {
+                var filePath = _fileDialog.OpenExcelFile();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    StandardTagListLoading = true;
+                    await _standardMappingSetRepository.GetDataAsync(filePath);
+                    Log("Source item list Loaded");
+                }
+            }
+            finally
+            {
+                StandardTagListLoading = false;
+            }
+        }
+        private bool OnOpenSourceItemListCanExecute()
         {
             return true;
         }
@@ -70,6 +118,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             LoggerItems.Add($"{time}|{log}");
         }
+
         private void LogNewError(object sender, NewErrorEventArgs e)
         {
             Log(e.errorMessage);
