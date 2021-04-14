@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
+    using OneView_MappingSet_MVVM.DataAccess;
+
     public class ExcelRepositoryOfT<TData, TExcelAccess> : IExcelRepositoryOfT<TData>
         where TData : class
-        where TExcelAccess : class
+        where TExcelAccess : ExcelAccess<TData>
     {
         protected readonly TExcelAccess ExcelAccess;
 

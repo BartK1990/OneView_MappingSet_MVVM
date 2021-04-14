@@ -8,7 +8,7 @@
       xmlns:fa5="http://schemas.fontawesome.com/icons/" 
       xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="320" d:DesignWidth="400"
+      d:DesignHeight="320" d:DesignWidth="600"
       Title="MappingSetView">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -16,55 +16,74 @@
     </Page.Resources>
     <Grid Margin="10 10 10 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30px" />
-            <RowDefinition Height="30px" />
-            <RowDefinition Height="30px" />
+            <RowDefinition Height="50px" />
+            <RowDefinition Height="2px" />
+            <RowDefinition Height="50px" />
+            <RowDefinition Height="2px" />
+            <RowDefinition Height="50px" />
+            <RowDefinition Height="40px" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
-                <Grid>
+            <Border Style="{StaticResource BorderDefault}">
+                <Grid Margin="2 2 2 2">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="8*"/>
-                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="1">
+                    <DockPanel Grid.Row="0">
                         <Button x:Name="OpenStandardTagListButton" Command="{Binding OpenStandardTagListCommand}" Content="Open Standard Tag list" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
                         <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding StandardTagListLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                         <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding StandardTagListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                     </DockPanel>
+                    <TextBlock Grid.Row="2" Text="{Binding StandardTagListPath}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockDefault}"/>
                 </Grid>
-            </DockPanel>
-            <DockPanel Grid.Row="1">
-                <Grid>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="2">
+            <Border Style="{StaticResource BorderDefault}">
+                <Grid Margin="2 2 2 2">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="8*"/>
-                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="1">
+                    <DockPanel Grid.Row="0">
                         <Button x:Name="OpenSourceItemDictionaryButton" Command="{Binding OpenSourceItemDictionaryCommand}" Content="Open Source Item Dictionary" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
                         <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding SourceItemDictionaryLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                         <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding SourceItemDictionaryLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                     </DockPanel>
+                    <TextBlock Grid.Row="2" Text="{Binding SourceItemDictionaryPath}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockDefault}"/>
                 </Grid>
-            </DockPanel>
-            <DockPanel Grid.Row="2">
-                <Grid>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="4">
+            <Border Style="{StaticResource BorderDefault}">
+                <Grid Margin="2 2 2 2">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="8*"/>
-                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="1">
+                    <DockPanel Grid.Row="0">
                         <Button x:Name="OpenSourceItemListButton" Command="{Binding OpenSourceItemListCommand}" Content="Open Source Item List" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
                         <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding SourceItemListLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                         <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding SourceItemListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
                     </DockPanel>
+                    <TextBlock Grid.Row="2" Text="{Binding SourceItemListPath}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockDefault}"/>
                 </Grid>
-            </DockPanel>
-        <DockPanel Grid.Row="3" Margin="0 6 0 0">
-            <uc:ListViewWithCopy ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="5">
+            <Border Width="120" Margin="0 2 0 2" Style="{StaticResource BorderDefault}">
+                <Button x:Name="ProcessButton" Command="{Binding ProcessCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="6">
+            <Border Style="{StaticResource BorderDefault}">
+                <uc:ListViewWithCopy ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>
+            </Border>
         </DockPanel>
     </Grid>
 </Page>

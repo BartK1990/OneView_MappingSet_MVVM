@@ -16,21 +16,21 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly IFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
 
-        public ObservableCollection<string> LoggerItems { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
 
-        private bool standardTagListLoading;
+        private bool _standardTagListLoading;
         public bool StandardTagListLoading
         {
-            get => this.standardTagListLoading;
-            set { this.SetAndNotify(ref this.standardTagListLoading, value, () => this.StandardTagListLoading); }
+            get => this._standardTagListLoading;
+            set { this.SetAndNotify(ref this._standardTagListLoading, value, () => this.StandardTagListLoading); }
         }
-        private string logOutput;
-        public string LogOutput
+        private string _standardTagListPath;
+        public string StandardTagListPath
         {
-            get => this.logOutput;
-            set { this.SetAndNotify(ref this.logOutput, value, () => this.LogOutput); }
+            get => this._standardTagListPath;
+            set { this.SetAndNotify(ref this._standardTagListPath, value, () => this.StandardTagListPath); }
         }
-       
+        
         public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
         {
             this._standardMappingSetRepository = standardMappingSetRepository;
@@ -52,6 +52,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 var filePath = _fileDialog.OpenExcelFile();
                 if (!string.IsNullOrEmpty(filePath))
                 {
+                    StandardTagListPath = filePath;
                     StandardTagListLoading = true;
                     await _standardMappingSetRepository.GetDataAsync(filePath);
                     Log("Standard mapping set Loaded");

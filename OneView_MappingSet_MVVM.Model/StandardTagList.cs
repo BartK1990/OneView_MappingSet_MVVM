@@ -5,6 +5,12 @@ namespace OneView_MappingSet_MVVM.Model
 {
     public class StandardTagList
     {
-        public ICollection<Iec6140025Tag> TaglistCollection;
+        public StandardTagList()
+        {
+            TagListCollection = new List<Iec6140025Tag>();
+        }
+    
+        public ICollection<Iec6140025Tag> TagListCollection { get; set; }
+
     }
 }

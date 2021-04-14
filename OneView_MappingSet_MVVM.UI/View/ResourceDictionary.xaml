@@ -5,5 +5,14 @@
     <SolidColorBrush x:Key="WindowBackgroundColor">#FFA4A2A2</SolidColorBrush>
     <SolidColorBrush x:Key="BlockBackgroundColor">#B7B7B7</SolidColorBrush>
     <SolidColorBrush x:Key="IconsForegroundColor">#FF2B2B2B</SolidColorBrush>
+    <Style TargetType="TextBlock" x:Key="TextBlockDefault">
+        <Setter Property="Background" Value="{StaticResource BlockBackgroundColor}"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+    <Style TargetType="Border" x:Key="BorderDefault">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource IconsForegroundColor}"/>
+    </Style>
 
 </ResourceDictionary>

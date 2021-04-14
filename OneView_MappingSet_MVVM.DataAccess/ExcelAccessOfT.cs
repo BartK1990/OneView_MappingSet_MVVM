@@ -1,5 +1,5 @@
 ﻿using OfficeOpenXml;
-using System.Collections.Generic;
+using System;
 using System.IO;
 
 namespace OneView_MappingSet_MVVM.DataAccess
@@ -9,7 +9,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
         protected string SheetName;
         protected int MaxColNum;
 
-        protected virtual ICollection<T> GetSheetData(string path)
+        protected virtual T GetSheetData(string path)
         {
             using (Stream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
@@ -21,9 +21,9 @@ namespace OneView_MappingSet_MVVM.DataAccess
             }
         }
 
-        protected virtual ICollection<T> ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
+        protected virtual T ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         protected string GetCellValue(object cell)

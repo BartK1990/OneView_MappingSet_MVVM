@@ -7,7 +7,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
     using OneView_MappingSet_MVVM.Model;
 
 
-    public class StandardTagListExcelAccess : ExcelAccess<Iec6140025Tag>
+    public class StandardTagListExcelAccess : ExcelAccess<StandardTagList>
     {
         private const int TagnameColNum = 1;
         private const int PresentationNameColNum = 5;
@@ -31,19 +31,18 @@ namespace OneView_MappingSet_MVVM.DataAccess
 
         public StandardTagList GetStandardMappingSet(string path)
         {
-            StandardTagList standardMappingSet = new StandardTagList();
-            standardMappingSet.TaglistCollection = GetSheetData(path);
-            return standardMappingSet;
+            return GetSheetData(path);
         }
 
-        protected override ICollection<Iec6140025Tag> GetSheetData(string path)
+        protected override StandardTagList GetSheetData(string path)
         {
             return base.GetSheetData(path);
         }
 
-        protected override ICollection<Iec6140025Tag> ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
+        protected override StandardTagList ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
         {
-            var sheetDataCollection = new List<Iec6140025Tag>();
+            var standardTagList = new StandardTagList();
+            var sheetDataCollection = standardTagList.TagListCollection;
 
             // Get data
             for (int i = 2; i <= rows; i++)
@@ -90,7 +89,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
                 }
                 sheetDataCollection.Add(iecTag);
             }
-            return sheetDataCollection;
+            return standardTagList;
         }
     }
 }
