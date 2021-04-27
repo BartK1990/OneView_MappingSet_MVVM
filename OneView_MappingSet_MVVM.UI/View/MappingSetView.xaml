@@ -4,12 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OneView_MappingSet_MVVM.UI.View"
+      xmlns:helper="clr-namespace:OneView_MappingSet_MVVM.UI.View.Helpers"
       xmlns:uc="clr-namespace:OneView_MappingSet_MVVM.UI.View.UserControls"
       xmlns:fa5="http://schemas.fontawesome.com/icons/" 
       xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="320" d:DesignWidth="600"
-      Title="MappingSetView">
+      Title="MappingSetView" DragEnter="Page_DragEnter"
+      DragLeave="Page_DragLeave" Drop="Page_Drop">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -82,7 +84,8 @@
         </DockPanel>
         <DockPanel Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
-                <uc:ListViewWithCopy ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>
+                <!--<uc:ListViewWithCopy x:Name="LogConsole" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>-->
+                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" Background="{StaticResource BlockBackgroundColor}"/>
             </Border>
         </DockPanel>
     </Grid>

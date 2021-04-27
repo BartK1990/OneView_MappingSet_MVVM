@@ -8,15 +8,23 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
     using Data.Repositories;
     using Event;
     using View.Services;
+    using View.Helpers;
     using ViewModel.Services;
 
-    public class MappingSetViewModel : ViewModelBase
+    public class MappingSetViewModel : ViewModelBase, IFileDragDropTarget
     {
         private readonly IStandardTagListRepository _standardMappingSetRepository;
         private readonly IFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
+
+        private string _loggerText;
+        public string LoggerText
+        {
+            get => this._loggerText;
+            set { this.SetAndNotify(ref this._loggerText, value, () => this.LoggerText); }
+        }
 
         private bool _standardTagListLoading;
         public bool StandardTagListLoading
@@ -118,11 +126,20 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             LoggerItems.Add($"{time}|{log}");
+            LoggerText += $"{time}|{log}{Environment.NewLine}";
         }
 
         private void LogNewError(object sender, NewErrorEventArgs e)
         {
             Log(e.errorMessage);
+        }
+
+        public void OnFileDrop(string[] filepaths)
+        {
+            foreach (var fp in filepaths)
+            {
+                Log(fp);
+            }
         }
     }
 }
