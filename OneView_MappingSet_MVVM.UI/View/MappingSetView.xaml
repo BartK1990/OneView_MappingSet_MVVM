@@ -10,8 +10,7 @@
       xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="320" d:DesignWidth="600"
-      Title="MappingSetView" DragEnter="Page_DragEnter"
-      DragLeave="Page_DragLeave" Drop="Page_Drop">
+      Title="MappingSetView">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -85,7 +84,7 @@
         <DockPanel Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
                 <!--<uc:ListViewWithCopy x:Name="LogConsole" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>-->
-                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" Background="{StaticResource BlockBackgroundColor}"/>
+                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" Background="{StaticResource BlockBackgroundColor}" PreviewDragOver="LogConsole_PreviewDragOver" PreviewDragEnter="LogConsole_PreviewDragEnter" PreviewDragLeave="LogConsole_PreviewDragLeave"/>
             </Border>
         </DockPanel>
     </Grid>

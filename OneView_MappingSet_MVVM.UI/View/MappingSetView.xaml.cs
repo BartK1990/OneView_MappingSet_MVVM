@@ -23,17 +23,17 @@ namespace OneView_MappingSet_MVVM.UI.View
             InitializeComponent();
         }
 
-        private void Page_DragEnter(object sender, DragEventArgs e)
+        private void LogConsole_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void LogConsole_PreviewDragEnter(object sender, DragEventArgs e)
         {
             LogConsole.Background = FindResource("BlockBackgroundDropColor") as SolidColorBrush;
         }
 
-        private void Page_DragLeave(object sender, DragEventArgs e)
-        {
-            LogConsole.Background = FindResource("BlockBackgroundColor") as SolidColorBrush;
-        }
-
-        private void Page_Drop(object sender, DragEventArgs e)
+        private void LogConsole_PreviewDragLeave(object sender, DragEventArgs e)
         {
             LogConsole.Background = FindResource("BlockBackgroundColor") as SolidColorBrush;
         }
