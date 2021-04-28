@@ -81,11 +81,20 @@
                 <Button x:Name="ProcessButton" Command="{Binding ProcessCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Border>
         </DockPanel>
-        <DockPanel Grid.Row="6">
+        <Grid Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
                 <!--<uc:ListViewWithCopy x:Name="LogConsole" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>-->
-                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" Background="{StaticResource BlockBackgroundColor}" PreviewDragOver="LogConsole_PreviewDragOver" PreviewDragEnter="LogConsole_PreviewDragEnter" PreviewDragLeave="LogConsole_PreviewDragLeave"/>
+                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" Background="{StaticResource BlockBackgroundColor}" PreviewDragOver="LogConsole_PreviewDragOver" PreviewDragEnter="LogConsole_PreviewDragEnter"
+                         AllowDrop="True"/>
             </Border>
-        </DockPanel>
+            <Grid x:Name="LogConsoleDropGrid">
+                <Label Content="Drop it here!" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                <Rectangle x:Name="LogConsoleDropRect" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource BlockBackgroundDropColor}" Opacity="0.5"
+                           AllowDrop="True" 
+                           helper:FileDragDropHelper.IsFileDragDropEnabled="True" 
+                           helper:FileDragDropHelper.FileDragDropTarget="{Binding}"
+                           DragLeave="LogConsoleDropRect_DragLeave" Drop="LogConsoleDropRect_Drop" PreviewDragOver="LogConsoleDropRect_PreviewDragOver"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

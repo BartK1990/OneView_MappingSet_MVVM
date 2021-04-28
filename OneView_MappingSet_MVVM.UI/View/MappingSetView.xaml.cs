@@ -21,6 +21,7 @@ namespace OneView_MappingSet_MVVM.UI.View
         public MappingSetView()
         {
             InitializeComponent();
+            LogConsoleDropGrid.Visibility = Visibility.Hidden;
         }
 
         private void LogConsole_PreviewDragOver(object sender, DragEventArgs e)
@@ -28,14 +29,24 @@ namespace OneView_MappingSet_MVVM.UI.View
             e.Handled = true;
         }
 
-        private void LogConsole_PreviewDragEnter(object sender, DragEventArgs e)
+        private void LogConsoleDropRect_PreviewDragOver(object sender, DragEventArgs e)
         {
-            LogConsole.Background = FindResource("BlockBackgroundDropColor") as SolidColorBrush;
+            e.Handled = true;
         }
 
-        private void LogConsole_PreviewDragLeave(object sender, DragEventArgs e)
+        private void LogConsole_PreviewDragEnter(object sender, DragEventArgs e)
         {
-            LogConsole.Background = FindResource("BlockBackgroundColor") as SolidColorBrush;
+            LogConsoleDropGrid.Visibility = Visibility.Visible;
+        }
+
+        private void LogConsoleDropRect_DragLeave(object sender, DragEventArgs e)
+        {
+            LogConsoleDropGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void LogConsoleDropRect_Drop(object sender, DragEventArgs e)
+        {
+            LogConsoleDropGrid.Visibility = Visibility.Hidden;
         }
     }
 }
