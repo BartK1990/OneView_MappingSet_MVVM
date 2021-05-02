@@ -125,8 +125,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private void Log(string log)
         {
             var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            LoggerItems.Add($"{time}|{log}");
-            LoggerText += $"{time}|{log}{Environment.NewLine}";
+            var logStr = $"{time} | { log}";
+            LoggerItems.Add(logStr);
+            LoggerText += $"{logStr}{Environment.NewLine}";
         }
 
         private void LogNewError(object sender, NewErrorEventArgs e)

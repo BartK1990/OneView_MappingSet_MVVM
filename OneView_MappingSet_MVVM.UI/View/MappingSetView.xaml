@@ -7,7 +7,7 @@
       xmlns:helper="clr-namespace:OneView_MappingSet_MVVM.UI.View.Helpers"
       xmlns:uc="clr-namespace:OneView_MappingSet_MVVM.UI.View.UserControls"
       xmlns:fa5="http://schemas.fontawesome.com/icons/" 
-      xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.Converters"
+      xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.View.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="320" d:DesignWidth="600"
       Title="MappingSetView">
@@ -84,16 +84,19 @@
         <Grid Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
                 <!--<uc:ListViewWithCopy x:Name="LogConsole" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>-->
-                <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" Background="{StaticResource BlockBackgroundColor}" PreviewDragOver="LogConsole_PreviewDragOver" PreviewDragEnter="LogConsole_PreviewDragEnter"
-                         AllowDrop="True"/>
+                <ScrollViewer>
+                    <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" Background="{StaticResource BlockBackgroundColor}" 
+                             PreviewDragEnter="LogConsole_PreviewDragEnter"
+                             AllowDrop="True"/>
+                </ScrollViewer>
             </Border>
             <Grid x:Name="LogConsoleDropGrid">
                 <Label Content="Drop it here!" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-                <Rectangle x:Name="LogConsoleDropRect" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource BlockBackgroundDropColor}" Opacity="0.5"
+                <StackPanel x:Name="LogConsoleDropRect" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{StaticResource BlockBackgroundDropColor}" Opacity="0.5"
                            AllowDrop="True" 
                            helper:FileDragDropHelper.IsFileDragDropEnabled="True" 
                            helper:FileDragDropHelper.FileDragDropTarget="{Binding}"
-                           DragLeave="LogConsoleDropRect_DragLeave" Drop="LogConsoleDropRect_Drop" PreviewDragOver="LogConsoleDropRect_PreviewDragOver"/>
+                           DragLeave="LogConsoleDropRect_DragLeave" Drop="LogConsoleDropRect_Drop"/>
             </Grid>
         </Grid>
     </Grid>

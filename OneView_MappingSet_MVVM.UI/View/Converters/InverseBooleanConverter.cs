@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace OneView_MappingSet_MVVM.UI.Converters
+namespace OneView_MappingSet_MVVM.UI.View.Converters
 {
     [ValueConversion(typeof(bool), typeof(bool))]
     public class InverseBooleanConverter : IValueConverter

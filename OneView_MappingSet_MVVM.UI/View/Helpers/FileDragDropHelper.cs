@@ -35,8 +35,8 @@ namespace OneView_MappingSet_MVVM.UI.View.Helpers
         private static void OnFileDragDropEnabled(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == e.OldValue) return;
-            var control = d as Control;
-            if (control != null) control.Drop += OnDrop;
+            var uiElement = d as UIElement;
+            if (uiElement != null) uiElement.Drop += OnDrop;
         }
 
         private static void OnDrop(object _sender, DragEventArgs _dragEventArgs)

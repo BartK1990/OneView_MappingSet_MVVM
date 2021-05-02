@@ -24,16 +24,6 @@ namespace OneView_MappingSet_MVVM.UI.View
             LogConsoleDropGrid.Visibility = Visibility.Hidden;
         }
 
-        private void LogConsole_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void LogConsoleDropRect_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            e.Handled = true;
-        }
-
         private void LogConsole_PreviewDragEnter(object sender, DragEventArgs e)
         {
             LogConsoleDropGrid.Visibility = Visibility.Visible;
