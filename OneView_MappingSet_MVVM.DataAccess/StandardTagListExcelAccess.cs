@@ -20,7 +20,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
 
         public StandardTagListExcelAccess()
         {
-            SheetName = "SCI Standard Mappingset"; // Sheet name used in base class in GetSheetData
+            SheetName = MappingSetGenerator.StandardTagListSheetName; // Sheet name used in base class in GetSheetData
             MaxColNum = CollectorTypeColNum;
         }
 
