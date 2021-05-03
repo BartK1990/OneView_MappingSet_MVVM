@@ -5,13 +5,13 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
     using OneView_MappingSet_MVVM.DataAccess;
 
-    public class ExcelRepositoryOfT<TData, TExcelAccess> : IExcelRepositoryOfT<TData>
+    public class ExcelRepository<TData, TExcelAccess> : IExcelRepository<TData>
         where TData : class
         where TExcelAccess : ExcelAccess<TData>
     {
         protected readonly TExcelAccess ExcelAccess;
 
-        public ExcelRepositoryOfT(TExcelAccess excelAccess)
+        public ExcelRepository(TExcelAccess excelAccess)
         {
             this.ExcelAccess = excelAccess;
         }

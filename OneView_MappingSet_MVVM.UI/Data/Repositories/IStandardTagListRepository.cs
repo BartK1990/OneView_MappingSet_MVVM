@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface IStandardTagListRepository : IExcelRepositoryOfT<StandardTagList>
+    public interface IStandardTagListRepository : IExcelRepository<StandardTagList>
     {
     }
 }
