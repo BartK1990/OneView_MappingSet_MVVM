@@ -72,11 +72,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         public void CheckIfConatainsValidSheet_EmptyCollection_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
-            var sheetList = new List<string>
-            {
-                "Some sheet",
-                "Some other sheet"
-            };
+            var sheetList = new List<string>();
             var result = msp.CheckIfConatainsValidSheet(sheetList);
 
             Assert.AreEqual(ExcelFileType.Invalid, result);
