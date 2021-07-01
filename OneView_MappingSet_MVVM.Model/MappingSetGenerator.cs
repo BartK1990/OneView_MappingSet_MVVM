@@ -19,6 +19,9 @@ namespace OneView_MappingSet_MVVM.Model
 
         public ExcelFileType CheckIfConatainsValidSheet(ICollection<string> sheetCollection) 
         {
+            if(sheetCollection is null)
+                return ExcelFileType.Invalid;
+
             foreach (string sheetName in sheetCollection)
             {
                 switch (sheetName)

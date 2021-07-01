@@ -1,32 +1,115 @@
 ﻿using NUnit.Framework;
 using OneView_MappingSet_MVVM.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.Tests.Model
 {
     class MappingSetGeneratorTests
     {
+        private MappingSetGenerator msp;
+
         [SetUp]
         public void Setup()
         {
+            msp = new MappingSetGenerator();
+        }
 
+        #region CheckIfConatainsValidSheet
+        [Test]
+        public void CheckIfConatainsValidSheet_Null_ExcelFileType()
+        {
+            var result = msp.CheckIfConatainsValidSheet(null);
+            Assert.AreEqual(ExcelFileType.Invalid, result);
+        }
+
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_Null_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(null);
+            Assert.AreEqual(ExcelFileType.Invalid, result);
         }
 
         [Test]
         public void CheckIfConatainsValidSheet_ValidExcelType1_ExcelFileType()
         {
-            var msp = new MappingSetGenerator();
-            var sheetList = new List<string>
-            {
-                "SCI Standard Mappingset"
-            };
-            var result = msp.CheckIfConatainsValidSheet(sheetList);
+            var result = msp.CheckIfConatainsValidSheet(ValidExcelType1_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.StandardTagList, result);
+        }
 
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_ValidExcelType1_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType1_ExcelFileType());
             Assert.AreEqual(ExcelFileType.StandardTagList, result);
         }
 
         [Test]
         public void CheckIfConatainsValidSheet_ValidExcelType2_ExcelFileType()
+        {
+            var result = msp.CheckIfConatainsValidSheet(ValidExcelType2_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.SourceDictionary, result);
+        }
+
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_ValidExcelType2_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType2_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.SourceDictionary, result);
+        }
+
+        [Test]
+        public void CheckIfConatainsValidSheet_ValidExcelType3_ExcelFileType()
+        {
+            var result = msp.CheckIfConatainsValidSheet(ValidExcelType3_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.SourceList, result);
+        }
+
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_ValidExcelType3_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType3_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.SourceList, result);
+        }
+
+        [Test]
+        public void CheckIfConatainsValidSheet_InvalidExcelType1_ExcelFileType()
+        {
+            var result = msp.CheckIfConatainsValidSheet(InvalidExcelType1_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.Invalid, result);
+        }
+
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_InvalidExcelType1_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(InvalidExcelType1_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.Invalid, result);
+        }
+
+        [Test]
+        public void CheckIfConatainsValidSheet_EmptyCollection_ExcelFileType()
+        {
+            var result = msp.CheckIfConatainsValidSheet(EmptyCollection_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.Invalid, result);
+        }
+
+        [Test]
+        public async Task CheckIfConatainsValidSheetAsync_EmptyCollection_ExcelFileType()
+        {
+            var result = await msp.CheckIfConatainsValidSheetAsync(EmptyCollection_ExcelFileType());
+            Assert.AreEqual(ExcelFileType.Invalid, result);
+        }
+
+        private static ICollection<string> ValidExcelType1_ExcelFileType()
+        {
+            var sheetList = new List<string>
+            {
+                "SCI Standard Mappingset"
+            };
+            return sheetList;
+        }
+
+        private static ICollection<string> ValidExcelType2_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -34,28 +117,21 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "SCI Source Dictionary",
                 "Some other sheet"
             };
-
-            var result = msp.CheckIfConatainsValidSheet(sheetList);
-
-            Assert.AreEqual(ExcelFileType.SourceDictionary, result);
+            return sheetList;
         }
 
-        [Test]
-        public void CheckIfConatainsValidSheet_ValidExcelType3_ExcelFileType()
+        private static ICollection<string> ValidExcelType3_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
             {
-                "SCI Source Items",
-                "Some other sheet"
+                "Some other sheet",
+                "SCI Source Items"
             };
-            var result = msp.CheckIfConatainsValidSheet(sheetList);
-
-            Assert.AreEqual(ExcelFileType.SourceList, result);
+            return sheetList;
         }
 
-        [Test]
-        public void CheckIfConatainsValidSheet_InvalidExcelType1_ExcelFileType()
+        private static ICollection<string> InvalidExcelType1_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -63,20 +139,17 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "Some sheet",
                 "Some other sheet"
             };
-            var result = msp.CheckIfConatainsValidSheet(sheetList);
-
-            Assert.AreEqual(ExcelFileType.Invalid, result);
+            return sheetList;
         }
 
-        [Test]
-        public void CheckIfConatainsValidSheet_EmptyCollection_ExcelFileType()
+        private static ICollection<string> EmptyCollection_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>();
             var result = msp.CheckIfConatainsValidSheet(sheetList);
-
-            Assert.AreEqual(ExcelFileType.Invalid, result);
+            return sheetList;
         }
 
+        #endregion
     }
 }
