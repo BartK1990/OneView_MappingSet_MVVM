@@ -77,9 +77,13 @@
             </Border>
         </DockPanel>
         <DockPanel Grid.Row="5">
-            <Border Width="120" Margin="0 2 0 2" Style="{StaticResource BorderDefault}">
-                <Button x:Name="ProcessButton" Command="{Binding ProcessCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </Border>
+            <DockPanel HorizontalAlignment="Center">
+                <Border Width="120" Margin="0 2 0 2" Style="{StaticResource BorderDefault}">
+                    <Button x:Name="ProcessButton" Command="{Binding ProcessMappingSetCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </Border>
+                <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding ProcessMappingSetLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding ProcessMappingSetLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+            </DockPanel>
         </DockPanel>
         <Grid Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
