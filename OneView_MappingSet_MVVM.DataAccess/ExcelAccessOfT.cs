@@ -4,7 +4,7 @@ using System.IO;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class ExcelAccess<T>
+    public abstract class ExcelAccess<T>
     {
         protected string SheetName;
         protected int MaxColNum;
@@ -21,10 +21,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
             }
         }
 
-        protected virtual T ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract T ReadSheetData(ExcelWorksheet worksheet, int rows, int columns);
 
         protected string GetCellValue(object cell)
         {
