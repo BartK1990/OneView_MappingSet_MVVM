@@ -87,7 +87,6 @@
         </DockPanel>
         <Grid Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
-                <!--<uc:ListViewWithCopy x:Name="LogConsole" AllowDrop="True" helper:FileDragDropHelper.IsFileDragDropEnabled="True" helper:FileDragDropHelper.FileDragDropTarget="{Binding}" ItemsSource="{Binding LoggerItems}" Background="{StaticResource BlockBackgroundColor}"></uc:ListViewWithCopy>-->
                 <ScrollViewer>
                     <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" Background="{StaticResource BlockBackgroundColor}" 
                              PreviewDragEnter="LogConsole_PreviewDragEnter"
@@ -97,10 +96,21 @@
             <Grid x:Name="LogConsoleDropGrid">
                 <Label Content="Drop it here!" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
                 <StackPanel x:Name="LogConsoleDropRect" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{StaticResource BlockBackgroundDropColor}" Opacity="0.5"
-                           AllowDrop="True" 
-                           helper:FileDragDropHelper.IsFileDragDropEnabled="True" 
-                           helper:FileDragDropHelper.FileDragDropTarget="{Binding}"
-                           DragLeave="LogConsoleDropRect_DragLeave" Drop="LogConsoleDropRect_Drop"/>
+                        AllowDrop="True" 
+                        helper:FileDragDropHelper.IsFileDragDropEnabled="True" 
+                        helper:FileDragDropHelper.FileDragDropTarget="{Binding}"
+                        DragLeave="LogConsoleDropRect_DragLeave" Drop="LogConsoleDropRect_Drop"/>
+            </Grid>
+            <Grid Visibility="{Binding DragAndDropFilesLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+                    <fa5:SvgAwesome Icon="Solid_Fan" Spin="True" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                    <fa5:SvgAwesome Icon="Solid_Wind" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                </DockPanel>
             </Grid>
         </Grid>
     </Grid>

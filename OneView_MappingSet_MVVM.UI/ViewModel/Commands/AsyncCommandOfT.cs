@@ -4,21 +4,29 @@ using System.Windows.Input;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
 {
-    using ViewModel.Services;
+    using OneView_MappingSet_MVVM.UI.ViewModel.Services;
 
-    public class AsyncCommand : IAsyncCommand
+    public class AsyncCommand<T> : IAsyncCommand<T>
     {
         public event EventHandler CanExecuteChanged;
 
         private bool _isExecuting;
-        private readonly IErrorHandler _errorHandler;
-        private readonly Func<Task> _execute;
+        private readonly Func<T, Task> _executeOfT;
         private readonly Func<bool> _canExecute;
+        private readonly Func<T, bool> _canExecuteOfT;
+        private readonly IErrorHandler _errorHandler;
 
-        public AsyncCommand(Func<Task> execute, Func<bool> canExecute = null, IErrorHandler errorHandler = null)
+        public AsyncCommand(Func<T, Task> execute, Func<bool> canExecute = null, IErrorHandler errorHandler = null)
         {
-            _execute = execute;
+            _executeOfT = execute;
             _canExecute = canExecute;
+            _errorHandler = errorHandler;
+        }
+
+        public AsyncCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, IErrorHandler errorHandler = null)
+        {
+            _executeOfT = execute;
+            _canExecuteOfT = canExecute;
             _errorHandler = errorHandler;
         }
 
@@ -27,17 +35,22 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
             return !_isExecuting && (_canExecute?.Invoke() ?? true);
         }
 
-        public async Task ExecuteAsync()
+        public bool CanExecute(T parameter)
         {
-            if (CanExecute())
+            return !_isExecuting && (_canExecuteOfT?.Invoke(parameter) ?? true);
+        }
+
+        public async Task ExecuteAsync(T parameter)
+        {
+            if (CanExecute(parameter))
             {
                 try
                 {
                     _isExecuting = true;
                     RaiseCanExecuteChanged();
-                    await _execute();
+                    await _executeOfT(parameter);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _errorHandler?.HandleError(ex);
                 }
@@ -46,6 +59,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
                     _isExecuting = false;
                 }
             }
+
             RaiseCanExecuteChanged();
         }
 
@@ -57,12 +71,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)
         {
-            return CanExecute();
+            return CanExecute((T)parameter);
         }
 
         void ICommand.Execute(object parameter)
         {
-            _ = ExecuteAsync();
+            _ = ExecuteAsync((T)parameter);
         }
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace OneView_MappingSet_MVVM.UI.View.Helpers
 {
@@ -36,10 +36,29 @@ namespace OneView_MappingSet_MVVM.UI.View.Helpers
         {
             if (e.NewValue == e.OldValue) return;
             var uiElement = d as UIElement;
-            if (uiElement != null) uiElement.Drop += OnDrop;
+            if (uiElement != null) uiElement.Drop += OnDropAsync;
         }
 
-        private static void OnDrop(object _sender, DragEventArgs _dragEventArgs)
+        //private static void OnDrop(object _sender, DragEventArgs _dragEventArgs)
+        //{
+        //    DependencyObject d = _sender as DependencyObject;
+        //    if (d == null) return;
+        //    Object target = d.GetValue(FileDragDropTargetProperty);
+        //    IFileDragDropTarget fileTarget = target as IFileDragDropTarget;
+        //    if (fileTarget != null)
+        //    {
+        //        if (_dragEventArgs.Data.GetDataPresent(DataFormats.FileDrop))
+        //        {
+        //            fileTarget.OnFileDrop((string[])_dragEventArgs.Data.GetData(DataFormats.FileDrop));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("FileDragDropTarget object must be of type IFileDragDropTarget");
+        //    }
+        //}
+
+        private static async void OnDropAsync(object _sender, DragEventArgs _dragEventArgs)
         {
             DependencyObject d = _sender as DependencyObject;
             if (d == null) return;
@@ -49,7 +68,7 @@ namespace OneView_MappingSet_MVVM.UI.View.Helpers
             {
                 if (_dragEventArgs.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    fileTarget.OnFileDrop((string[])_dragEventArgs.Data.GetData(DataFormats.FileDrop));
+                    await fileTarget.OnFileDropAsync((string[])_dragEventArgs.Data.GetData(DataFormats.FileDrop));
                 }
             }
             else

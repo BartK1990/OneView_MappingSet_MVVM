@@ -70,7 +70,14 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             get => this._processMappingSetLoading;
             set { this.SetAndNotify(ref this._processMappingSetLoading, value, () => this.ProcessMappingSetLoading); }
-        } 
+        }
+
+        private bool _dragAndDropFilesLoading;
+        public bool DragAndDropFilesLoading
+        {
+            get => this._dragAndDropFilesLoading;
+            set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
+        }      
 
         public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
         {
@@ -195,12 +202,25 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             Log(e.errorMessage);
         }
 
-        public void OnFileDrop(string[] filepaths)
+        public async Task OnFileDropAsync(string[] filepaths)
         {
-            foreach (var fp in filepaths)
+            try
             {
-                Log(fp);
+                DragAndDropFilesLoading = true;
+                foreach (var fp in filepaths)
+                {
+                    Log($"New file dropped: {fp}");
+                }
+                await Task.Delay(3000); // just for test
+                Log("Nothing interesting happend :-D");
+                //await _standardMappingSetRepository.GetDataAsync(filePath);
+                //Log("Source item list Loaded");
+            }
+            finally
+            {
+                DragAndDropFilesLoading = false;
             }
         }
+
     }
 }
