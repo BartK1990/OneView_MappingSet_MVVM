@@ -1,6 +1,6 @@
 ﻿namespace OneView_MappingSet_MVVM.UI.View.Services
 {
-    public interface IFileDialog
+    public interface IExcelFileDialog
     {
         string OpenExcelFile();
     }

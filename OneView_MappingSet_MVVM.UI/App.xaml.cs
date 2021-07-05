@@ -10,7 +10,7 @@ namespace OneView_MappingSet_MVVM.UI
     public partial class App : Application
     {
 
-        public IFileDialog FileDialog;
+        public IExcelFileDialog FileDialog;
         public IStandardTagListRepository StandardMappingSetRepository;
         public IErrorHandler ErrorHandler;
 
@@ -19,7 +19,7 @@ namespace OneView_MappingSet_MVVM.UI
             base.OnStartup(e);
 
             // Application objects initialization
-            FileDialog = new FileDialog();
+            FileDialog = new ExcelFileDialog();
             StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
             ErrorHandler = new ErrorHandler();
 

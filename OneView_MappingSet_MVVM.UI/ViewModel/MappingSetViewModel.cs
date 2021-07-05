@@ -14,7 +14,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
     public class MappingSetViewModel : ViewModelBase, IFileDragDropTarget
     {
         private readonly IStandardTagListRepository _standardTagListRepository;
-        private readonly IFileDialog _fileDialog;
+        private readonly IExcelFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
@@ -79,7 +79,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
         }      
 
-        public MappingSetViewModel(IFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
+        public MappingSetViewModel(IExcelFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
         {
             this._standardTagListRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;

@@ -2,7 +2,7 @@
 
 namespace OneView_MappingSet_MVVM.UI.View.Services
 {
-    public class FileDialog : IFileDialog
+    public class ExcelFileDialog : IExcelFileDialog
     {
         public string OpenExcelFile()
         {
