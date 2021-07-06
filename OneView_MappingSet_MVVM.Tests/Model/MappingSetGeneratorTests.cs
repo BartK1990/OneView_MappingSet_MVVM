@@ -100,7 +100,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
 
-        private static ICollection<string> ValidExcelType1_ExcelFileType()
+        private static IList<string> ValidExcelType1_ExcelFileType()
         {
             var sheetList = new List<string>
             {
@@ -109,7 +109,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             return sheetList;
         }
 
-        private static ICollection<string> ValidExcelType2_ExcelFileType()
+        private static IList<string> ValidExcelType2_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -120,7 +120,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             return sheetList;
         }
 
-        private static ICollection<string> ValidExcelType3_ExcelFileType()
+        private static IList<string> ValidExcelType3_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -131,7 +131,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             return sheetList;
         }
 
-        private static ICollection<string> InvalidExcelType1_ExcelFileType()
+        private static IList<string> InvalidExcelType1_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -142,7 +142,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             return sheetList;
         }
 
-        private static ICollection<string> EmptyCollection_ExcelFileType()
+        private static IList<string> EmptyCollection_ExcelFileType()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>();

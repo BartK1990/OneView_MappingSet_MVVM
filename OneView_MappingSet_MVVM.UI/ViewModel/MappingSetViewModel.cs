@@ -97,6 +97,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
             // Commands
             OpenStandardTagListCommand = new AsyncCommand(OnOpenStandardTagList, OnOpenStandardTagListCanExecute, this._errorHandler);
+            GetStandardTagListCommand = new AsyncCommand<string>(execute: OnGetStandardTagList, errorHandler: this._errorHandler);
             OpenSourceItemDictionaryCommand = new AsyncCommand(OnOpenSourceItemDictionary, OnOpenSourceItemDictionaryCanExecute, this._errorHandler);
             OpenSourceItemListCommand = new AsyncCommand(OnOpenSourceItemList, OnOpenSourceItemListCanExecute, this._errorHandler);
             ProcessMappingSetCommand = new AsyncCommand(OnProcessMappingSet, OnProcessMappingSetCanExecute, this._errorHandler);
@@ -109,10 +110,15 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             var filePath = _fileDialog.OpenExcelFile();
             if (!string.IsNullOrEmpty(filePath))
             {
-                await GetStandardTagList(filePath);
+                await GetStandardTagListCommand.ExecuteAsync(filePath);
             }
         }
-        private async Task GetStandardTagList(string filePath)
+        private bool OnOpenStandardTagListCanExecute()
+        {
+            return true;
+        }
+        public IAsyncCommand<string> GetStandardTagListCommand { get; private set; }
+        private async Task OnGetStandardTagList(string filePath)
         {
             try
             {
@@ -125,10 +131,6 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 StandardTagListLoading = false;
             }
-        }
-        private bool OnOpenStandardTagListCanExecute()
-        {
-            return true;
         }
 
         public IAsyncCommand OpenSourceItemDictionaryCommand { get; private set; }
@@ -200,7 +202,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                     switch (excelFileType)
                     {
                         case ExcelFileType.StandardTagList:
-                            await GetStandardTagList(fp);
+                            await GetStandardTagListCommand.ExecuteAsync(fp);
                             break;
 
                         default:
