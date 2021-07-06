@@ -16,6 +16,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
         private readonly Func<T, bool> _canExecuteOfT;
         private readonly IErrorHandler _errorHandler;
 
+        public AsyncCommand(Func<T, Task> execute, IErrorHandler errorHandler = null)
+        {
+            _executeOfT = execute;
+            _errorHandler = errorHandler;
+        }
+
         public AsyncCommand(Func<T, Task> execute, Func<bool> canExecute = null, IErrorHandler errorHandler = null)
         {
             _executeOfT = execute;
