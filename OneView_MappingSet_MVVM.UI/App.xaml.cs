@@ -12,6 +12,7 @@ namespace OneView_MappingSet_MVVM.UI
 
         public IExcelFileDialog FileDialog;
         public IStandardTagListRepository StandardMappingSetRepository;
+        public IExcelSheetNameRepository ExcelSheetNameRepository;
         public IErrorHandler ErrorHandler;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -20,9 +21,10 @@ namespace OneView_MappingSet_MVVM.UI
 
             // Application objects initialization
             FileDialog = new ExcelFileDialog();
-            StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
             ErrorHandler = new ErrorHandler();
-
+            StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
+            ExcelSheetNameRepository = new ExcelSheetNameRepository(new SheetNamesExcelAccess());
+            
         }
     }
 }

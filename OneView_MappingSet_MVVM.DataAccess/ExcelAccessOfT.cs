@@ -1,32 +1,32 @@
 ﻿using OfficeOpenXml;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
     public abstract class ExcelAccess<T>
     {
-        protected string SheetName;
-        protected int MaxColNum;
-
-        protected virtual T GetSheetData(string path)
+        protected T GetExcelPackage(string path)
         {
             using (Stream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (ExcelPackage package = new ExcelPackage(stream))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[SheetName];
-                    return ReadSheetData(worksheet, worksheet.Dimension.Rows, worksheet.Dimension.Columns);
+                {             
+                    return GetExcelData(package);
                 }
             }
         }
 
-        protected abstract T ReadSheetData(ExcelWorksheet worksheet, int rows, int columns);
+        protected abstract T GetExcelData(ExcelPackage package);
 
-        protected string GetCellValue(object cell)
+        public T GetExcelData(string path)
         {
-            if (cell == null)
-                return string.Empty;
-            return cell.ToString();
+            return GetExcelPackage(path);
+        }
+
+        public async Task<T> GetExcelDataAsync(string path)
+        {
+            return await Task.Run(() => GetExcelData(path));
         }
     }
 }

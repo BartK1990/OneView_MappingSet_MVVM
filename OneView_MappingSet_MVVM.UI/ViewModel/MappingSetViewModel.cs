@@ -79,7 +79,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
         }      
 
-        public MappingSetViewModel(IExcelFileDialog fileDialog, IStandardTagListRepository standardMappingSetRepository, IErrorHandler errorHandler)
+        public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
+            ,IStandardTagListRepository standardMappingSetRepository
+            ,IExcelSheetNameRepository excelSheetNameRepository)
         {
             this._standardTagListRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;
@@ -91,8 +93,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             OpenSourceItemDictionaryCommand = new AsyncCommand(OnOpenSourceItemDictionary, OnOpenSourceItemDictionaryCanExecute, this._errorHandler);
             OpenSourceItemListCommand = new AsyncCommand(OnOpenSourceItemList, OnOpenSourceItemListCanExecute, this._errorHandler);
             ProcessMappingSetCommand = new AsyncCommand(OnProcessMappingSet, OnProcessMappingSetCanExecute, this._errorHandler);
+            DragAndDropFilesCommand = new AsyncCommand<string[]>(OnDragAndDropFiles, OnDragAndDropFilesCanExecute, this._errorHandler);
         }
-
+        
         public IAsyncCommand OpenStandardTagListCommand { get; private set; }
         private async Task OnOpenStandardTagList()
         {
@@ -167,6 +170,36 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             return true;
         }
 
+        public async Task OnFileDropAsync(string[] filepaths)
+        {
+            await DragAndDropFilesCommand.ExecuteAsync(filepaths);
+        }
+        public IAsyncCommand<string[]> DragAndDropFilesCommand { get; private set; }
+        private async Task OnDragAndDropFiles(string[] filepaths)
+        {
+            try
+            {
+                DragAndDropFilesLoading = true;
+                foreach (var fp in filepaths)
+                {
+                    Log($"New file dropped: {fp}");
+                }
+                await Task.Delay(3000); // just for test
+                Log("Nothing interesting happend :-P");
+                //await _standardMappingSetRepository.GetDataAsync(filePath);
+                //Log("Source item list Loaded");
+            }
+            finally
+            {
+                DragAndDropFilesLoading = false;
+            }
+        }
+        private bool OnDragAndDropFilesCanExecute()
+        {
+            // TODO: execution is possible only when all other files are correctly loaded
+            return true;
+        }
+
         public IAsyncCommand ProcessMappingSetCommand { get; private set; }
         private async Task OnProcessMappingSet()
         {
@@ -192,7 +225,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private void Log(string log)
         {
             var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var logStr = $"{time} | { log}";
+            var logStr = $"{time} | {log}";
             LoggerItems.Add(logStr);
             LoggerText += $"{logStr}{Environment.NewLine}";
         }
@@ -200,26 +233,6 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private void LogNewError(object sender, NewErrorEventArgs e)
         {
             Log(e.errorMessage);
-        }
-
-        public async Task OnFileDropAsync(string[] filepaths)
-        {
-            try
-            {
-                DragAndDropFilesLoading = true;
-                foreach (var fp in filepaths)
-                {
-                    Log($"New file dropped: {fp}");
-                }
-                await Task.Delay(3000); // just for test
-                Log("Nothing interesting happend :-D");
-                //await _standardMappingSetRepository.GetDataAsync(filePath);
-                //Log("Source item list Loaded");
-            }
-            finally
-            {
-                DragAndDropFilesLoading = false;
-            }
         }
 
     }

@@ -1,12 +1,11 @@
 ﻿using OfficeOpenXml;
-using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
     using OneView_MappingSet_MVVM.Model;
 
 
-    public class StandardTagListExcelAccess : ExcelAccess<StandardTagList>
+    public class StandardTagListExcelAccess : SheetDataExcelAccess<StandardTagList>
     {
         private const int TagnameColNum = 1;
         private const int PresentationNameColNum = 5;
@@ -21,21 +20,6 @@ namespace OneView_MappingSet_MVVM.DataAccess
         {
             SheetName = MappingSetGenerator.StandardTagListSheetName; // Sheet name used in base class in GetSheetData
             MaxColNum = CollectorTypeColNum;
-        }
-
-        public async Task<StandardTagList> GetStandardMappingSetAsync(string path)
-        {
-            return await Task.Run(() => GetStandardMappingSet(path));
-        }
-
-        public StandardTagList GetStandardMappingSet(string path)
-        {
-            return GetSheetData(path);
-        }
-
-        protected override StandardTagList GetSheetData(string path)
-        {
-            return base.GetSheetData(path);
         }
 
         protected override StandardTagList ReadSheetData(ExcelWorksheet worksheet, int rows, int columns)

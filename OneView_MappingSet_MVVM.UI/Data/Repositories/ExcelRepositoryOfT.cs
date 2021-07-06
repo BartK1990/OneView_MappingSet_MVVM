@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using OneView_MappingSet_MVVM.DataAccess;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    using OneView_MappingSet_MVVM.DataAccess;
-
-    public class ExcelRepository<TData, TExcelAccess> : IExcelRepository<TData>
+    public abstract class ExcelRepository<TData, TExcelAccess> : IExcelRepository<TData>
         where TData : class
         where TExcelAccess : ExcelAccess<TData>
     {
@@ -16,9 +14,6 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
             this.ExcelAccess = excelAccess;
         }
 
-        public virtual Task<TData> GetDataAsync(string path)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Task<TData> GetDataAsync(string path);
     }
 }
