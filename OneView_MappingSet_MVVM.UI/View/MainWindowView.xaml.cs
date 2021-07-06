@@ -20,6 +20,7 @@ namespace OneView_MappingSet_MVVM.UI.View
             // Initialize ViewModel and assign to DataContext for window/page
             mappingSetView.DataContext = new ViewModel.MappingSetViewModel(fileDialog: curApp.FileDialog
                 , errorHandler: curApp.ErrorHandler
+                , mappingSetGeneratorService: curApp.MappingSetGeneratorService
                 , standardMappingSetRepository: curApp.StandardMappingSetRepository
                 , excelSheetNameRepository: curApp.ExcelSheetNameRepository);
 

@@ -17,7 +17,7 @@ namespace OneView_MappingSet_MVVM.Model
         public const string SourceItemDictionarySheetName = "SCI Source Dictionary";
         public const string SourceItemListSheetName = "SCI Source Items";
 
-        public ExcelFileType CheckIfConatainsValidSheet(ICollection<string> sheetCollection) 
+        public ExcelFileType CheckIfConatainsValidSheet(IList<string> sheetCollection) 
         {
             if(sheetCollection is null)
                 return ExcelFileType.Invalid;
@@ -39,7 +39,7 @@ namespace OneView_MappingSet_MVVM.Model
             return ExcelFileType.Invalid;
         }
 
-        public async Task<ExcelFileType> CheckIfConatainsValidSheetAsync(ICollection<string> sheetCollection)
+        public async Task<ExcelFileType> CheckIfConatainsValidSheetAsync(IList<string> sheetCollection)
         {
             return await Task.Run(() => CheckIfConatainsValidSheet(sheetCollection));
         }

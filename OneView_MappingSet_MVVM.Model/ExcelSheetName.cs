@@ -9,6 +9,6 @@ namespace OneView_MappingSet_MVVM.Model
             SheetCollection = new List<string>();
         }
 
-        public ICollection<string> SheetCollection { get; set; }
+        public IList<string> SheetCollection { get; set; }
     }
 }

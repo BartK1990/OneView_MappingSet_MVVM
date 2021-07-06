@@ -10,12 +10,16 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
     using View.Services;
     using View.Helpers;
     using ViewModel.Services;
+    using OneView_MappingSet_MVVM.Model;
+    using OneView_MappingSet_MVVM.UI.Data.Services;
 
     public class MappingSetViewModel : ViewModelBase, IFileDragDropTarget
     {
-        private readonly IStandardTagListRepository _standardTagListRepository;
         private readonly IExcelFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
+        private readonly IMappingSetGeneratorService _mappingSetGeneratorService;
+        private readonly IStandardTagListRepository _standardTagListRepository;
+        private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
 
@@ -77,16 +81,19 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             get => this._dragAndDropFilesLoading;
             set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
-        }      
+        }
 
         public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
-            ,IStandardTagListRepository standardMappingSetRepository
-            ,IExcelSheetNameRepository excelSheetNameRepository)
+            , IMappingSetGeneratorService mappingSetGeneratorService
+            , IStandardTagListRepository standardMappingSetRepository
+            , IExcelSheetNameRepository excelSheetNameRepository)
         {
-            this._standardTagListRepository = standardMappingSetRepository;
             this._fileDialog = fileDialog;
             this._errorHandler = errorHandler;
             this._errorHandler.NewError += LogNewError;
+            this._standardTagListRepository = standardMappingSetRepository;
+            this._excelSheetNameRepository = excelSheetNameRepository;
+            this._mappingSetGeneratorService = mappingSetGeneratorService;
 
             // Commands
             OpenStandardTagListCommand = new AsyncCommand(OnOpenStandardTagList, OnOpenStandardTagListCanExecute, this._errorHandler);
@@ -99,16 +106,20 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         public IAsyncCommand OpenStandardTagListCommand { get; private set; }
         private async Task OnOpenStandardTagList()
         {
+            var filePath = _fileDialog.OpenExcelFile();
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                await GetStandardTagList(filePath);
+            }
+        }
+        private async Task GetStandardTagList(string filePath)
+        {
             try
             {
-                var filePath = _fileDialog.OpenExcelFile();
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    StandardTagListPath = filePath;
-                    StandardTagListLoading = true;
-                    await _standardTagListRepository.GetDataAsync(filePath);
-                    Log("Standard mapping set Loaded");
-                }
+                StandardTagListLoading = true;
+                StandardTagListPath = filePath;
+                await _standardTagListRepository.GetDataAsync(filePath);
+                Log("Standard mapping set Loaded");
             }
             finally
             {
@@ -183,9 +194,21 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 foreach (var fp in filepaths)
                 {
                     Log($"New file dropped: {fp}");
+                    var esn = await _excelSheetNameRepository.GetDataAsync(fp);
+                    var excelFileType = await _mappingSetGeneratorService.GetExcelFileTypeAsync(esn.SheetCollection);
+                    Log($"Excel file type: {excelFileType}");
+                    switch (excelFileType)
+                    {
+                        case ExcelFileType.StandardTagList:
+                            await GetStandardTagList(fp);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
                 await Task.Delay(3000); // just for test
-                Log("Nothing interesting happend :-P");
+                Log("All dropped files processed");
                 //await _standardMappingSetRepository.GetDataAsync(filePath);
                 //Log("Source item list Loaded");
             }
