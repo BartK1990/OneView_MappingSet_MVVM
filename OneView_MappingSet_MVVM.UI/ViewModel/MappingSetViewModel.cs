@@ -7,6 +7,7 @@ using OneView_MappingSet_MVVM.UI.View.Services;
 using OneView_MappingSet_MVVM.UI.ViewModel.Commands;
 using OneView_MappingSet_MVVM.UI.ViewModel.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -234,6 +235,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 DragAndDropFilesLoading = true;
+                var tasks = new List<Task>();
                 foreach (var fp in filepaths)
                 {
                     Log($"New file dropped: {fp}");
@@ -243,18 +245,19 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                     switch (excelFileType)
                     {
                         case ExcelFileType.StandardTagList:
-                            GetStandardTagListCommand.ExecuteAsync(fp);
+                            tasks.Add(GetStandardTagListCommand.ExecuteAsync(fp));
                             break;
                         case ExcelFileType.SourceDictionary:
-                            GetSourceItemDictionaryCommand.ExecuteAsync(fp);
+                            tasks.Add(GetSourceItemDictionaryCommand.ExecuteAsync(fp));
                             break;
                         case ExcelFileType.SourceList:
-                            GetSourceItemListCommand.ExecuteAsync(fp);
+                            tasks.Add(GetSourceItemListCommand.ExecuteAsync(fp));
                             break;
                         default:
                             break;
                     }
                 }
+                await Task.WhenAll(tasks);
                 Log("All dropped files processed");
             }
             finally
