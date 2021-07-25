@@ -1,24 +1,25 @@
-﻿using System;
+﻿using OneView_MappingSet_MVVM.Model;
+using OneView_MappingSet_MVVM.UI.Data.Repositories;
+using OneView_MappingSet_MVVM.UI.Data.Services;
+using OneView_MappingSet_MVVM.UI.Event;
+using OneView_MappingSet_MVVM.UI.View.Helpers;
+using OneView_MappingSet_MVVM.UI.View.Services;
+using OneView_MappingSet_MVVM.UI.ViewModel.Commands;
+using OneView_MappingSet_MVVM.UI.ViewModel.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.ViewModel
 {
-    using Commands;
-    using Data.Repositories;
-    using Event;
-    using View.Services;
-    using View.Helpers;
-    using ViewModel.Services;
-    using OneView_MappingSet_MVVM.Model;
-    using OneView_MappingSet_MVVM.UI.Data.Services;
-
     public class MappingSetViewModel : ViewModelBase, IFileDragDropTarget
     {
         private readonly IExcelFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
         private readonly IMappingSetGeneratorService _mappingSetGeneratorService;
         private readonly IStandardTagListRepository _standardTagListRepository;
+        private readonly ISourceItemDictionaryRepository _sourceItemDictionaryRepository;
+        private readonly ISourceItemListRepository _sourceItemListRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
@@ -86,12 +87,16 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
             , IMappingSetGeneratorService mappingSetGeneratorService
             , IStandardTagListRepository standardMappingSetRepository
+            , ISourceItemDictionaryRepository sourceItemDictionaryRepository
+            , ISourceItemListRepository sourceItemListRepository
             , IExcelSheetNameRepository excelSheetNameRepository)
         {
             this._fileDialog = fileDialog;
             this._errorHandler = errorHandler;
             this._errorHandler.NewError += LogNewError;
             this._standardTagListRepository = standardMappingSetRepository;
+            this._sourceItemDictionaryRepository = sourceItemDictionaryRepository;
+            this._sourceItemListRepository = sourceItemListRepository;
             this._excelSheetNameRepository = excelSheetNameRepository;
             this._mappingSetGeneratorService = mappingSetGeneratorService;
 
@@ -99,11 +104,16 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             OpenStandardTagListCommand = new AsyncCommand(OnOpenStandardTagList, OnOpenStandardTagListCanExecute, this._errorHandler);
             GetStandardTagListCommand = new AsyncCommand<string>(execute: OnGetStandardTagList, errorHandler: this._errorHandler);
             OpenSourceItemDictionaryCommand = new AsyncCommand(OnOpenSourceItemDictionary, OnOpenSourceItemDictionaryCanExecute, this._errorHandler);
+            GetSourceItemDictionaryCommand = new AsyncCommand<string>(execute: OnGetSourceItemDictionary, errorHandler: this._errorHandler);
             OpenSourceItemListCommand = new AsyncCommand(OnOpenSourceItemList, OnOpenSourceItemListCanExecute, this._errorHandler);
+            GetSourceItemListCommand = new AsyncCommand<string>(execute: OnGetSourceItemList, errorHandler: this._errorHandler);
+
             ProcessMappingSetCommand = new AsyncCommand(OnProcessMappingSet, OnProcessMappingSetCanExecute, this._errorHandler);
+
             DragAndDropFilesCommand = new AsyncCommand<string[]>(OnDragAndDropFiles, OnDragAndDropFilesCanExecute, this._errorHandler);
         }
-        
+
+        #region StandardTagList commands
         public IAsyncCommand OpenStandardTagListCommand { get; private set; }
         private async Task OnOpenStandardTagList()
         {
@@ -124,64 +134,95 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 StandardTagListLoading = true;
                 StandardTagListPath = filePath;
-                await _standardTagListRepository.GetDataAsync(filePath);
-                Log("Standard mapping set Loaded");
+                var standardTagList = await _standardTagListRepository.GetDataAsync(filePath);
+                Log("Standard mapping set loaded");
+
+            }
+            catch
+            {
+                Log($"Standard mapping set loading error");
+                throw;
             }
             finally
             {
                 StandardTagListLoading = false;
             }
         }
+        #endregion
 
+        #region SourceItemDictionary commands
         public IAsyncCommand OpenSourceItemDictionaryCommand { get; private set; }
         private async Task OnOpenSourceItemDictionary()
         {
-            try
+            var filePath = _fileDialog.OpenExcelFile();
+            if (!string.IsNullOrEmpty(filePath))
             {
-                var filePath = _fileDialog.OpenExcelFile();
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    SourceItemDictionaryLoading = true;
-                    await Task.Delay(3000); // just for test
-                    Log("Nothing interesting happend :-P");
-                    //await _standardMappingSetRepository.GetDataAsync(filePath);
-                    //Log("Source item dictionary Loaded");
-                }
-            }
-            finally
-            {
-                SourceItemDictionaryLoading = false;
+                await GetSourceItemDictionaryCommand.ExecuteAsync(filePath);
             }
         }
         private bool OnOpenSourceItemDictionaryCanExecute()
         {
             return true;
         }
-
-        public IAsyncCommand OpenSourceItemListCommand { get; private set; }
-        private async Task OnOpenSourceItemList()
+        public IAsyncCommand<string> GetSourceItemDictionaryCommand { get; private set; }
+        private async Task OnGetSourceItemDictionary(string filePath)
         {
             try
             {
-                var filePath = _fileDialog.OpenExcelFile();
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    SourceItemListLoading = true;
-                    await Task.Delay(3000); // just for test
-                    Log("Nothing interesting happend :-)");
-                    //await _standardMappingSetRepository.GetDataAsync(filePath);
-                    //Log("Source item list Loaded");
-                }
+                SourceItemDictionaryLoading = true;
+                SourceItemDictionaryPath = filePath;
+                var sourceItemDictionary = await _sourceItemDictionaryRepository.GetDataAsync(filePath);
+                Log("Source item list loaded");
+
+            }
+            catch
+            {
+                Log($"Source item list loading error");
+                throw;
             }
             finally
             {
-                SourceItemListLoading = false;
+                SourceItemDictionaryLoading = false;
+            }
+        }
+        #endregion
+
+        #region SourceItemList commands
+        public IAsyncCommand OpenSourceItemListCommand { get; private set; }
+        private async Task OnOpenSourceItemList()
+        {
+            var filePath = _fileDialog.OpenExcelFile();
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                await GetSourceItemListCommand.ExecuteAsync(filePath);
             }
         }
         private bool OnOpenSourceItemListCanExecute()
         {
             return true;
         }
+        public IAsyncCommand<string> GetSourceItemListCommand { get; private set; }
+        private async Task OnGetSourceItemList(string filePath)
+        {
+            try
+            {
+                SourceItemListLoading = true;
+                SourceItemListPath = filePath;
+                var sourceItemList = await _sourceItemListRepository.GetDataAsync(filePath);
+                Log("Source item list loaded");
+
+            }
+            catch
+            {
+                Log($"Source item list loading error");
+                throw;
+            }
+            finally
+            {
+                SourceItemListLoading = false;
+            }
+        }
+        #endregion
 
         public async Task OnFileDropAsync(string[] filepaths)
         {
@@ -202,17 +243,19 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                     switch (excelFileType)
                     {
                         case ExcelFileType.StandardTagList:
-                            await GetStandardTagListCommand.ExecuteAsync(fp);
+                            GetStandardTagListCommand.ExecuteAsync(fp);
                             break;
-
+                        case ExcelFileType.SourceDictionary:
+                            GetSourceItemDictionaryCommand.ExecuteAsync(fp);
+                            break;
+                        case ExcelFileType.SourceList:
+                            GetSourceItemListCommand.ExecuteAsync(fp);
+                            break;
                         default:
                             break;
                     }
                 }
-                await Task.Delay(3000); // just for test
                 Log("All dropped files processed");
-                //await _standardMappingSetRepository.GetDataAsync(filePath);
-                //Log("Source item list Loaded");
             }
             finally
             {

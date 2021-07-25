@@ -22,12 +22,13 @@ namespace OneView_MappingSet_MVVM.UI.View
                 , errorHandler: curApp.ErrorHandler
                 , mappingSetGeneratorService: curApp.MappingSetGeneratorService
                 , standardMappingSetRepository: curApp.StandardMappingSetRepository
+                , sourceItemDictionaryRepository: curApp.SourceItemDictionaryRepository
+                , sourceItemListRepository: curApp.SourceItemListRepository
                 , excelSheetNameRepository: curApp.ExcelSheetNameRepository);
 
             //Only one view for now
             WindowContent.Navigate(mappingSetView);
 
-            
         }
     }
 }

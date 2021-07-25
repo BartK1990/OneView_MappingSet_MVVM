@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace OneView_MappingSet_MVVM.Model
 {
-    public class SourceItemList
+    public class SourceItemList : SourceListBase<SourceItem>
     {
+        public SourceItemList()
+        {
+            SourceDataList = new List<SourceItem>();
+        }
     }
 }

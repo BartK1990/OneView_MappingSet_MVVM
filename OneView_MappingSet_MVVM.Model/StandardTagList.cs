@@ -2,14 +2,11 @@
 
 namespace OneView_MappingSet_MVVM.Model
 {
-    public class StandardTagList
+    public class StandardTagList : SourceListBase<Iec6140025Tag>
     {
         public StandardTagList()
         {
-            TagListCollection = new List<Iec6140025Tag>();
+            SourceDataList = new List<Iec6140025Tag>();
         }
-    
-        public ICollection<Iec6140025Tag> TagListCollection { get; set; }
-
     }
 }
