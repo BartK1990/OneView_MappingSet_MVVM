@@ -6,7 +6,6 @@ using OneView_MappingSet_MVVM.UI.View.Services;
 using OneView_MappingSet_MVVM.UI.ViewModel.Services;
 using System.Windows;
 
-// comment to check
 namespace OneView_MappingSet_MVVM.UI
 {
     public partial class App : Application
