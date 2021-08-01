@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public abstract class SheetSpecificDataExcelAccess<T,TItem> : SheetDataExcelAccess<T>
+    public abstract class SheetSpecificDataReadExcelAccess<T,TItem> : SheetDataReadExcelAccess<T>
     {
         protected readonly Dictionary<string, string> columnsNamesToStructDict = new Dictionary<string, string>();
 

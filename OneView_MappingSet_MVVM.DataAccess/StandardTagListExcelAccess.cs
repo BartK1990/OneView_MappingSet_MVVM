@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class StandardTagListExcelAccess : SheetSpecificDataExcelAccess<StandardTagList,Iec6140025Tag>
+    public class StandardTagListExcelAccess : SheetSpecificDataReadExcelAccess<StandardTagList,Iec6140025Tag>
     {
         public StandardTagListExcelAccess()
         {

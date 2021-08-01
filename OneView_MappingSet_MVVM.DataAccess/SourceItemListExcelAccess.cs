@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class SourceItemListExcelAccess : SheetSpecificDataExcelAccess<SourceItemList, SourceItem>
+    public class SourceItemListExcelAccess : SheetSpecificDataReadExcelAccess<SourceItemList, SourceItem>
     {
         public SourceItemListExcelAccess()
         {

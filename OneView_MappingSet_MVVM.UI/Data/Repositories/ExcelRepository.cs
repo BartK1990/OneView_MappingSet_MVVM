@@ -14,6 +14,6 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
             this.ExcelAccess = excelAccess;
         }
 
-        public abstract Task<TData> GetDataAsync(string path);
+        public abstract Task<TData> ExchangeDataAsync(string path);
     }
 }

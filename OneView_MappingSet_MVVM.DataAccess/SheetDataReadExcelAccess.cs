@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public abstract class SheetDataExcelAccess<T> : ExcelAccess<T>
+    public abstract class SheetDataReadExcelAccess<T> : ExcelAccessRead<T>
     {
         protected string SheetName;
 
-        protected override T GetExcelData(ExcelPackage package)
+        protected override T ReadWriteExcelData(ExcelPackage package)
         {
             if(!package.Workbook.Worksheets.Any(sheet => sheet.Name == SheetName))
             {

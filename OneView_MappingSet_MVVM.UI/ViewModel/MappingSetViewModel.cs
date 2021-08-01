@@ -135,7 +135,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 StandardTagListLoading = true;
                 StandardTagListPath = filePath;
-                var standardTagList = await _standardTagListRepository.GetDataAsync(filePath);
+                var standardTagList = await _standardTagListRepository.ExchangeDataAsync(filePath);
                 Log("Standard mapping set loaded");
 
             }
@@ -172,13 +172,13 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 SourceItemDictionaryLoading = true;
                 SourceItemDictionaryPath = filePath;
-                var sourceItemDictionary = await _sourceItemDictionaryRepository.GetDataAsync(filePath);
-                Log("Source item list loaded");
+                var sourceItemDictionary = await _sourceItemDictionaryRepository.ExchangeDataAsync(filePath);
+                Log("Source item dictionary loaded");
 
             }
             catch
             {
-                Log($"Source item list loading error");
+                Log($"Source item dictionary loading error");
                 throw;
             }
             finally
@@ -209,7 +209,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 SourceItemListLoading = true;
                 SourceItemListPath = filePath;
-                var sourceItemList = await _sourceItemListRepository.GetDataAsync(filePath);
+                var sourceItemList = await _sourceItemListRepository.ExchangeDataAsync(filePath);
                 Log("Source item list loaded");
 
             }
@@ -239,7 +239,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 foreach (var fp in filepaths)
                 {
                     Log($"New file dropped: {fp}");
-                    var esn = await _excelSheetNameRepository.GetDataAsync(fp);
+                    var esn = await _excelSheetNameRepository.ExchangeDataAsync(fp);
                     var excelFileType = await _mappingSetGeneratorService.GetExcelFileTypeAsync(esn.SheetCollection);
                     Log($"Excel file type: {excelFileType}");
                     switch (excelFileType)

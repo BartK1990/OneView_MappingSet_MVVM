@@ -29,7 +29,7 @@ namespace OneView_MappingSet_MVVM.UI
             StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
             SourceItemDictionaryRepository = new SourceItemDictionaryRepository(new SourceItemDictionaryExcelAccess());
             SourceItemListRepository = new SourceItemListRepository(new SourceItemListExcelAccess());
-            ExcelSheetNameRepository = new ExcelSheetNameRepository(new SheetNamesExcelAccess());
+            ExcelSheetNameRepository = new ExcelSheetNameRepository(new SheetNamesReadExcelAccess());
         }
     }
 }

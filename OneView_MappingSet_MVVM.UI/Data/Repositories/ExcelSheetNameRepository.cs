@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public class ExcelSheetNameRepository : ExcelRepository<ExcelSheetName, SheetNamesExcelAccess>, IExcelSheetNameRepository
+    public class ExcelSheetNameRepository : ExcelRepository<ExcelSheetName, SheetNamesReadExcelAccess>, IExcelSheetNameRepository
     {
-        public ExcelSheetNameRepository(SheetNamesExcelAccess excelAccess) : base(excelAccess)
+        public ExcelSheetNameRepository(SheetNamesReadExcelAccess excelAccess) : base(excelAccess)
         {
         }
 
-        public override async Task<ExcelSheetName> GetDataAsync(string path)
+        public override async Task<ExcelSheetName> ExchangeDataAsync(string path)
         {
-            return await ExcelAccess.GetExcelDataAsync(path);
+            return await ExcelAccess.ReadExcelDataAsync(path);
         }
     }
 }

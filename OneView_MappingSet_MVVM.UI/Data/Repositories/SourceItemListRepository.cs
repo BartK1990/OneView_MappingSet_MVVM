@@ -10,9 +10,9 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
         {
         }
 
-        public override async Task<SourceItemList> GetDataAsync(string path)
+        public override async Task<SourceItemList> ExchangeDataAsync(string path)
         {
-            return await ExcelAccess.GetExcelDataAsync(path);
+            return await ExcelAccess.ReadExcelDataAsync(path);
         }
     }
 }
