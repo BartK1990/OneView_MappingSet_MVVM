@@ -7,4 +7,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel.Commands
     {
         Task ExecuteAsync();
     }
+
+    public interface IAsyncCommand<T> : ICommand
+    {
+        Task ExecuteAsync(T parameter);
+        bool CanExecute(T parameter);
+    }
 }
