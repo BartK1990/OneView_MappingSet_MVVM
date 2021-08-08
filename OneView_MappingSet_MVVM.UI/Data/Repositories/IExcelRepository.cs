@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-
-namespace OneView_MappingSet_MVVM.UI.Data.Repositories
+﻿namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface IExcelRepository<T>
+    public interface IExcelRepository
     {
-        Task<T> ExchangeDataAsync(string path);
     }
 }

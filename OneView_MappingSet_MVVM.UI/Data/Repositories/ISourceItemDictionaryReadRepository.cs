@@ -2,7 +2,7 @@
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface ISourceItemDictionaryRepository : IExcelRepository<SourceItemDictionary>
+    public interface ISourceItemDictionaryReadRepository : IExcelReadRepository<SourceItemDictionary>
     {
     }
 }

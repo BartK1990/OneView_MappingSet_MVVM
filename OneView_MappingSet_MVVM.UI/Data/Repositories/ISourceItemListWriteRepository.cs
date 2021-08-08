@@ -2,7 +2,7 @@
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface ISourceItemListCreateRepository : IExcelRepository<SourceItemList>
+    public interface ISourceItemListWriteRepository : IExcelWriteRepository
     {
     }
 }

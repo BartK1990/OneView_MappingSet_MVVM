@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using OneView_MappingSet_MVVM.DataAccess;
+﻿using OneView_MappingSet_MVVM.DataAccess;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public abstract class ExcelRepository<TData, TExcelAccess> : IExcelRepository<TData>
+    public abstract class ExcelRepository<TData, TExcelAccess> : IExcelRepository
         where TData : class
         where TExcelAccess : ExcelAccess<TData>
     {
@@ -13,7 +12,5 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
         {
             this.ExcelAccess = excelAccess;
         }
-
-        public abstract Task<TData> ExchangeDataAsync(string path);
     }
 }

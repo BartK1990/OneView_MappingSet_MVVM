@@ -10,7 +10,7 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
         {
         }
 
-        public override async Task<ExcelSheetName> ExchangeDataAsync(string path)
+        public async Task<ExcelSheetName> ReadDataAsync(string path)
         {
             return await ExcelAccess.ReadExcelDataAsync(path);
         }

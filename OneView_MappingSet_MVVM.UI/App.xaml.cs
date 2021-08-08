@@ -13,9 +13,10 @@ namespace OneView_MappingSet_MVVM.UI
         public IExcelFileDialog FileDialog;
         public IErrorHandler ErrorHandler;
         public IMappingSetGeneratorService MappingSetGeneratorService;
-        public IStandardTagListRepository StandardMappingSetRepository;
-        public ISourceItemDictionaryRepository SourceItemDictionaryRepository;
-        public ISourceItemListRepository SourceItemListRepository;
+        public IStandardTagListReadRepository StandardMappingSetReadRepository;
+        public ISourceItemDictionaryReadRepository SourceItemDictionaryReadRepository;
+        public ISourceItemListReadRepository SourceItemListReadRepository;
+        public ISourceItemListWriteRepository SourceItemListWriteRepository;
         public IExcelSheetNameRepository ExcelSheetNameRepository;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -26,9 +27,10 @@ namespace OneView_MappingSet_MVVM.UI
             FileDialog = new ExcelFileDialog();
             ErrorHandler = new ErrorHandler();
             MappingSetGeneratorService = new MappingSetGeneratorService(new MappingSetGenerator());
-            StandardMappingSetRepository = new StandardTagListRepository(new StandardTagListExcelAccess());
-            SourceItemDictionaryRepository = new SourceItemDictionaryRepository(new SourceItemDictionaryExcelAccess());
-            SourceItemListRepository = new SourceItemListRepository(new SourceItemListExcelAccess());
+            StandardMappingSetReadRepository = new StandardTagListReadRepository(new StandardTagListReadExcelAccess());
+            SourceItemDictionaryReadRepository = new SourceItemDictionaryReadRepository(new SourceItemDictionaryReadExcelAccess());
+            SourceItemListReadRepository = new SourceItemListReadRepository(new SourceItemListReadExcelAccess());
+            SourceItemListWriteRepository = new SourceItemListWriteRepository(new SourceItemListCreateExcelAccess());
             ExcelSheetNameRepository = new ExcelSheetNameRepository(new SheetNamesReadExcelAccess());
         }
     }

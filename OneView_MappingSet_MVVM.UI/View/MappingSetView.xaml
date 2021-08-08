@@ -68,9 +68,16 @@
                         <RowDefinition Height="8*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0">
-                        <Button x:Name="OpenSourceItemListButton" Command="{Binding OpenSourceItemListCommand}" Content="Open Source Item List" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
-                        <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding SourceItemListLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
-                        <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding SourceItemListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                        <DockPanel>
+                            <Button x:Name="OpenSourceItemListButton" Command="{Binding OpenSourceItemListCommand}" Content="Open Source Item List" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
+                            <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding SourceItemListLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                            <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding SourceItemListLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                        </DockPanel>
+                        <DockPanel HorizontalAlignment="Right">
+                            <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding SourceItemListCreating, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0 0 4 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                            <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding SourceItemListCreating}" SpinDuration="2" Margin="0 0 6 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                            <Button x:Name="CreateSourceItemListButton" Command="{Binding CreateSourceItemListCommand}" Content="Create Source Item List Template" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180"/>
+                        </DockPanel>
                     </DockPanel>
                     <TextBlock Grid.Row="2" Text="{Binding SourceItemListPath}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockDefault}"/>
                 </Grid>

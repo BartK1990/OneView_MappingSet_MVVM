@@ -2,7 +2,7 @@
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface ISourceItemListRepository : IExcelRepository<SourceItemList>
+    public interface IStandardTagListReadRepository : IExcelReadRepository<StandardTagList>
     {
     }
 }

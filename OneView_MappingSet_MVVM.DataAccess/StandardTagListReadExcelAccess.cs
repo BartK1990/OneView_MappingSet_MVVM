@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class StandardTagListExcelAccess : SheetSpecificDataReadExcelAccess<StandardTagList,Iec6140025Tag>
+    public class StandardTagListReadExcelAccess : SheetSpecificDataReadExcelAccess<StandardTagList,Iec6140025Tag>
     {
-        public StandardTagListExcelAccess()
+        public StandardTagListReadExcelAccess()
         {
             SheetName = MappingSetGenerator.StandardTagListSheetName; // Sheet name used in base class in GetExcelData   
             // Excel sheet columns to read

@@ -18,9 +18,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly IExcelFileDialog _fileDialog;
         private readonly IErrorHandler _errorHandler;
         private readonly IMappingSetGeneratorService _mappingSetGeneratorService;
-        private readonly IStandardTagListRepository _standardTagListRepository;
-        private readonly ISourceItemDictionaryRepository _sourceItemDictionaryRepository;
-        private readonly ISourceItemListRepository _sourceItemListRepository;
+        private readonly IStandardTagListReadRepository _standardTagListRepository;
+        private readonly ISourceItemDictionaryReadRepository _sourceItemDictionaryRepository;
+        private readonly ISourceItemListReadRepository _sourceItemListRepository;
+        private readonly ISourceItemListWriteRepository _sourceItemListWriteRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
@@ -63,6 +64,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             get => this._sourceItemListLoading;
             set { this.SetAndNotify(ref this._sourceItemListLoading, value, () => this.SourceItemListLoading); }
+        }        
+        private bool _sourceItemListCreating;
+        public bool SourceItemListCreating
+        {
+            get => this._sourceItemListCreating;
+            set { this.SetAndNotify(ref this._sourceItemListCreating, value, () => this.SourceItemListCreating); }
         }
         private string _sourceItemListPath;
         public string SourceItemListPath
@@ -87,10 +94,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
         public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
             , IMappingSetGeneratorService mappingSetGeneratorService
-            , IStandardTagListRepository standardMappingSetRepository
-            , ISourceItemDictionaryRepository sourceItemDictionaryRepository
-            , ISourceItemListRepository sourceItemListRepository
-            , IExcelSheetNameRepository excelSheetNameRepository)
+            , IStandardTagListReadRepository standardMappingSetRepository
+            , ISourceItemDictionaryReadRepository sourceItemDictionaryRepository
+            , ISourceItemListReadRepository sourceItemListRepository
+            , ISourceItemListWriteRepository sourceItemListWriteRepository
+            , IExcelSheetNameRepository excelSheetNameRepository
+            )
         {
             this._fileDialog = fileDialog;
             this._errorHandler = errorHandler;
@@ -98,6 +107,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._standardTagListRepository = standardMappingSetRepository;
             this._sourceItemDictionaryRepository = sourceItemDictionaryRepository;
             this._sourceItemListRepository = sourceItemListRepository;
+            this._sourceItemListWriteRepository = sourceItemListWriteRepository;
             this._excelSheetNameRepository = excelSheetNameRepository;
             this._mappingSetGeneratorService = mappingSetGeneratorService;
 
@@ -108,6 +118,8 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             GetSourceItemDictionaryCommand = new AsyncCommand<string>(execute: OnGetSourceItemDictionary, errorHandler: this._errorHandler);
             OpenSourceItemListCommand = new AsyncCommand(OnOpenSourceItemList, OnOpenSourceItemListCanExecute, this._errorHandler);
             GetSourceItemListCommand = new AsyncCommand<string>(execute: OnGetSourceItemList, errorHandler: this._errorHandler);
+
+            CreateSourceItemListCommand = new AsyncCommand(OnCreateSourceItemList, OnCreateSourceItemListCanExecute, this._errorHandler);
 
             ProcessMappingSetCommand = new AsyncCommand(OnProcessMappingSet, OnProcessMappingSetCanExecute, this._errorHandler);
 
@@ -135,7 +147,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 StandardTagListLoading = true;
                 StandardTagListPath = filePath;
-                var standardTagList = await _standardTagListRepository.ExchangeDataAsync(filePath);
+                var standardTagList = await _standardTagListRepository.ReadDataAsync(filePath);
                 Log("Standard mapping set loaded");
 
             }
@@ -172,7 +184,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 SourceItemDictionaryLoading = true;
                 SourceItemDictionaryPath = filePath;
-                var sourceItemDictionary = await _sourceItemDictionaryRepository.ExchangeDataAsync(filePath);
+                var sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
                 Log("Source item dictionary loaded");
 
             }
@@ -209,7 +221,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 SourceItemListLoading = true;
                 SourceItemListPath = filePath;
-                var sourceItemList = await _sourceItemListRepository.ExchangeDataAsync(filePath);
+                var sourceItemList = await _sourceItemListRepository.ReadDataAsync(filePath);
                 Log("Source item list loaded");
 
             }
@@ -222,6 +234,29 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             {
                 SourceItemListLoading = false;
             }
+        }
+
+        public IAsyncCommand CreateSourceItemListCommand { get; private set; }
+        private async Task OnCreateSourceItemList()
+        {
+            try
+            {
+                SourceItemListCreating = true;
+                var filePath = _fileDialog.SaveExcelFile();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    await _sourceItemListWriteRepository.WriteDataAsync(filePath);
+                }
+                Log($"Source item list template created: {filePath}");
+            }
+            finally
+            {
+                SourceItemListCreating = false;
+            }
+        }
+        private bool OnCreateSourceItemListCanExecute()
+        {
+            return true;
         }
         #endregion
 
@@ -239,7 +274,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 foreach (var fp in filepaths)
                 {
                     Log($"New file dropped: {fp}");
-                    var esn = await _excelSheetNameRepository.ExchangeDataAsync(fp);
+                    var esn = await _excelSheetNameRepository.ReadDataAsync(fp);
                     var excelFileType = await _mappingSetGeneratorService.GetExcelFileTypeAsync(esn.SheetCollection);
                     Log($"Excel file type: {excelFileType}");
                     switch (excelFileType)

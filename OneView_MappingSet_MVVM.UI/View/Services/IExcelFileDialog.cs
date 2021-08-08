@@ -3,5 +3,6 @@
     public interface IExcelFileDialog
     {
         string OpenExcelFile();
+        string SaveExcelFile();
     }
 }

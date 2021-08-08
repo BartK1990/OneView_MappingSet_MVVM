@@ -21,9 +21,10 @@ namespace OneView_MappingSet_MVVM.UI.View
             mappingSetView.DataContext = new ViewModel.MappingSetViewModel(fileDialog: curApp.FileDialog
                 , errorHandler: curApp.ErrorHandler
                 , mappingSetGeneratorService: curApp.MappingSetGeneratorService
-                , standardMappingSetRepository: curApp.StandardMappingSetRepository
-                , sourceItemDictionaryRepository: curApp.SourceItemDictionaryRepository
-                , sourceItemListRepository: curApp.SourceItemListRepository
+                , standardMappingSetRepository: curApp.StandardMappingSetReadRepository
+                , sourceItemDictionaryRepository: curApp.SourceItemDictionaryReadRepository
+                , sourceItemListRepository: curApp.SourceItemListReadRepository
+                , sourceItemListWriteRepository: curApp.SourceItemListWriteRepository
                 , excelSheetNameRepository: curApp.ExcelSheetNameRepository);
 
             //Only one view for now

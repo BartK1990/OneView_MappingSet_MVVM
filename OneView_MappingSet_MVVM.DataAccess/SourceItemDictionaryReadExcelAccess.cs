@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class SourceItemDictionaryExcelAccess : SheetSpecificDataReadExcelAccess<SourceItemDictionary, DictionaryItem>
+    public class SourceItemDictionaryReadExcelAccess : SheetSpecificDataReadExcelAccess<SourceItemDictionary, DictionaryItem>
     {
-        public SourceItemDictionaryExcelAccess()
+        public SourceItemDictionaryReadExcelAccess()
         {
             SheetName = MappingSetGenerator.SourceItemDictionarySheetName; // Sheet name used in base class in GetExcelData
             // Excel sheet columns to read

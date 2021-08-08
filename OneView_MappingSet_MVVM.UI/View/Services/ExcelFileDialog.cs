@@ -16,5 +16,18 @@ namespace OneView_MappingSet_MVVM.UI.View.Services
             }
             return null;
         }
+
+        public string SaveExcelFile()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel documents|*.xlsx;*.xls"; // Filter files by extension
+            saveFileDialog.ValidateNames = false;
+            bool? result = saveFileDialog.ShowDialog();
+            if (result == true)
+            {
+                return saveFileDialog.FileName;
+            }
+            return null;
+        }
     }
 }

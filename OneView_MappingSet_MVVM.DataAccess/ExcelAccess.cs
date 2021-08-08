@@ -7,16 +7,13 @@ namespace OneView_MappingSet_MVVM.DataAccess
     {
         protected T GetExcelPackage(string path, FileMode fileMode, FileAccess fileAccess, FileShare fileShare)
         {
-            using (Stream stream = System.IO.File.Open(path, fileMode, fileAccess, fileShare))
-            {
-                using (ExcelPackage package = new ExcelPackage(stream))
-                {             
-                    return ReadWriteExcelData(package);
-                }
+            FileInfo fileInfo = new FileInfo(path);
+            using (ExcelPackage package = new ExcelPackage(fileInfo))
+            {             
+                return ReadWriteExcelData(package);
             }
         }
 
         protected abstract T ReadWriteExcelData(ExcelPackage package);
-
     }
 }

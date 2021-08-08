@@ -5,14 +5,14 @@ namespace OneView_MappingSet_MVVM.DataAccess
 {
     public abstract class ExcelAccessCreate<T> : ExcelAccess<T>
     {
-        public T WriteExcelData(string path)
+        public void WriteExcelData(string path)
         {
-            return GetExcelPackage(path, FileMode.Create, FileAccess.Write, FileShare.None);
+            GetExcelPackage(path, FileMode.Create, FileAccess.Write, FileShare.None);
         }
 
-        public async Task<T> WriteExcelDataAsync(string path)
+        public async Task WriteExcelDataAsync(string path)
         {
-            return await Task.Run(() => WriteExcelData(path));
+            await Task.Run(() => WriteExcelData(path));
         }
     }
 }
