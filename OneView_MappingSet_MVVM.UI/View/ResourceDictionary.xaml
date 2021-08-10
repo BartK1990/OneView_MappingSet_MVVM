@@ -15,5 +15,8 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{StaticResource IconsForegroundColor}"/>
     </Style>
+    <Style TargetType="ComboBox" x:Key="ComboBoxDefault">
+        <Setter Property="Background" Value="{StaticResource BlockBackgroundColor}"/>
+    </Style>
 
 </ResourceDictionary>

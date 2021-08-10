@@ -26,6 +26,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
 
+        public ObservableCollection<string> TurbineTypesItems { get; private set; } = new ObservableCollection<string>()
+        {
+            "hahah"
+            ,"srtutu"
+        };
+
         private string _loggerText;
         public string LoggerText
         {
