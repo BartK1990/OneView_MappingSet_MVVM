@@ -17,5 +17,10 @@ namespace OneView_MappingSet_MVVM.UI.Data.Services
         {
             return await _mappingSetGenerator.CheckIfConatainsValidSheetAsync(sheetList);
         }
+
+        public async Task<IList<string>> GetTurbineTypesAsync(SourceItemDictionary sid)
+        {
+            return await _mappingSetGenerator.GetTurbineTypesAsync(sid);
+        }
     }
 }

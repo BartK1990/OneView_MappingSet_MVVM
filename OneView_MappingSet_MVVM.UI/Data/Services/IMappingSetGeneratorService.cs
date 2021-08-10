@@ -7,5 +7,6 @@ namespace OneView_MappingSet_MVVM.UI.Data.Services
     public interface IMappingSetGeneratorService
     {
         Task<ExcelFileType> GetExcelFileTypeAsync(IList<string> sheetList);
+        Task<IList<string>> GetTurbineTypesAsync(SourceItemDictionary sid);
     }
 }

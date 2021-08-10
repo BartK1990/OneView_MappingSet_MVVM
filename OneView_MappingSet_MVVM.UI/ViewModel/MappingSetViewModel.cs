@@ -26,11 +26,12 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
 
-        public ObservableCollection<string> TurbineTypesItems { get; private set; } = new ObservableCollection<string>()
+        private ObservableCollection<string> _turbineTypesItems;
+        public ObservableCollection<string> TurbineTypesItems
         {
-            "hahah"
-            ,"srtutu"
-        };
+            get => this._turbineTypesItems;
+            set { this.SetAndNotify(ref this._turbineTypesItems, value, () => this.TurbineTypesItems); }
+        }
 
         private string _loggerText;
         public string LoggerText
@@ -191,8 +192,8 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 SourceItemDictionaryLoading = true;
                 SourceItemDictionaryPath = filePath;
                 var sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
+                TurbineTypesItems = new ObservableCollection<string>(await _mappingSetGeneratorService.GetTurbineTypesAsync(sourceItemDictionary));
                 Log("Source item dictionary loaded");
-
             }
             catch
             {

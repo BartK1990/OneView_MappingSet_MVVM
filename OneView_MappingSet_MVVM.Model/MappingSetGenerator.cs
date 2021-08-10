@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.Model
@@ -38,11 +39,18 @@ namespace OneView_MappingSet_MVVM.Model
             }
             return ExcelFileType.Invalid;
         }
-
         public async Task<ExcelFileType> CheckIfConatainsValidSheetAsync(IList<string> sheetCollection)
         {
             return await Task.Run(() => CheckIfConatainsValidSheet(sheetCollection));
         }
-   
+
+        public IList<string> GetTurbineTypes(SourceItemDictionary input)
+        {
+            return input.SourceDataList.Select(t => t.TurbineType).Distinct().ToList();
+        }
+        public async Task<IList<string>> GetTurbineTypesAsync(SourceItemDictionary input)
+        {
+            return await Task.Run(() => GetTurbineTypes(input));
+        }
     }
 }
