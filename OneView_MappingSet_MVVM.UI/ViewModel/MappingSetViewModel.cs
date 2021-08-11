@@ -153,10 +153,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 StandardTagListLoading = true;
-                StandardTagListPath = filePath;
                 var standardTagList = await _standardTagListRepository.ReadDataAsync(filePath);
+                StandardTagListPath = filePath;
                 Log("Standard mapping set loaded");
-
             }
             catch
             {
@@ -189,10 +188,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         {
             try
             {
-                SourceItemDictionaryLoading = true;
-                SourceItemDictionaryPath = filePath;
+                SourceItemDictionaryLoading = true;              
                 var sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
                 TurbineTypesItems = new ObservableCollection<string>(await _mappingSetGeneratorService.GetTurbineTypesAsync(sourceItemDictionary));
+                SourceItemDictionaryPath = filePath;
                 Log("Source item dictionary loaded");
             }
             catch
@@ -227,8 +226,8 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 SourceItemListLoading = true;
-                SourceItemListPath = filePath;
                 var sourceItemList = await _sourceItemListRepository.ReadDataAsync(filePath);
+                SourceItemListPath = filePath;
                 Log("Source item list loaded");
 
             }
