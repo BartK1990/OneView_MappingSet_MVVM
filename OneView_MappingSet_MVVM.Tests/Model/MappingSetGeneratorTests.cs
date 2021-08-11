@@ -125,7 +125,6 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             var result = msp.CheckIfConatainsValidSheet(EmptyCollection_ExcelFileType());
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
-
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_EmptyCollection_ExcelFileType()
         {
@@ -154,6 +153,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             var result = msp.GetTurbineTypes(TwoTypes_2Items());
             Assert.AreEqual(exptectedOutput, result);
         }
+        [Test]
         public async Task GetTurbineTypesAsync_2Types_2Items()
         {
             var exptectedOutput = new List<string>()
@@ -188,6 +188,17 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             var result = msp.GetTurbineTypes(OneType_1Item());
             Assert.AreEqual(exptectedOutput, result);
         }
+        [Test]
+        public async Task GetTurbineTypesAsync_1Type_1Item()
+        {
+            var exptectedOutput = new List<string>()
+            {
+                "Vestas"
+            };
+
+            var result = await msp.GetTurbineTypesAsync(OneType_1Item());
+            Assert.AreEqual(exptectedOutput, result);
+        }
         private SourceItemDictionary OneType_1Item()
         {
             var sid = new SourceItemDictionary();
@@ -207,6 +218,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
 
             var result = msp.GetTurbineTypes(OneItem_1Item());
             Assert.AreEqual(exptectedOutput, result);
+        }        
+        public async Task GetTurbineTypesAsync_1Item_1Item()
+        {
+            var exptectedOutput = new List<string>()
+            {
+                "GE"
+            };
+
+            var result = await msp.GetTurbineTypesAsync(OneItem_1Item());
+            Assert.AreEqual(exptectedOutput, result);
         }
         private SourceItemDictionary OneItem_1Item()
         {
@@ -221,6 +242,14 @@ namespace OneView_MappingSet_MVVM.Tests.Model
             var exptectedOutput = new List<string>();
 
             var result = msp.GetTurbineTypes(new SourceItemDictionary());
+            Assert.AreEqual(exptectedOutput, result);
+        }        
+        [Test]
+        public async Task GetTurbineTypesAsync_EmptyList_EmptyList()
+        {
+            var exptectedOutput = new List<string>();
+
+            var result = await msp.GetTurbineTypesAsync(new SourceItemDictionary());
             Assert.AreEqual(exptectedOutput, result);
         }
         #endregion
