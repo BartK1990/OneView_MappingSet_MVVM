@@ -344,7 +344,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
 
         private void LogNewError(object sender, NewErrorEventArgs e)
         {
-            Log(e.errorMessage);
+            Log($"ERROR: {e.errorMessage}");
         }
 
     }
