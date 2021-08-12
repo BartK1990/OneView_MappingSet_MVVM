@@ -5,9 +5,9 @@ using System.Drawing;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class MappingSetCreateExcelAccess : ExcelAccessCreate<MappingSetTagList>
+    public class MappingSetCreateExcelAccess : ExcelAccessCreate<MappingTagList>
     {
-        protected override MappingSetTagList ReadWriteExcelData(ExcelPackage package)
+        protected override MappingTagList ReadWriteExcelData(ExcelPackage package)
         {
             ExcelWorksheet ws = package.Workbook.Worksheets.Add("Sheet1");
 
