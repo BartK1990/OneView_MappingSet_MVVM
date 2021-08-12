@@ -11,15 +11,19 @@ namespace OneView_MappingSet_MVVM.DataAccess
         {
             ExcelWorksheet ws = package.Workbook.Worksheets.Add(MappingSetGenerator.SourceItemListSheetName);
 
+            PrepareSheet(ws);
+
+            ws.Cells["A1"].AutoFitColumns();
+            package.Save();
+            return null;
+        }
+
+        private static void PrepareSheet(ExcelWorksheet ws)
+        {
             ws.Cells["A1"].Value = "SourceItemIdentifier";
             ws.Cells["A1"].Style.Font.Bold = true;
             ws.Cells["A1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells["A1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(@"#FFC000"));
-
-            ws.Cells["A1"].AutoFitColumns();
-
-            package.Save();
-            return null;
         }
     }
 }
