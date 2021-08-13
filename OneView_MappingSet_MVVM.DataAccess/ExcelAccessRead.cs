@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using OfficeOpenXml;
 using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.DataAccess
@@ -7,12 +7,20 @@ namespace OneView_MappingSet_MVVM.DataAccess
     {
         public T ReadExcelData(string path)
         {
-            return GetExcelPackage(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return GetExcelData(GetExcelPackage(path));
+        }
+        public T ReadExcelData(ExcelPackage package)
+        {
+            return GetExcelData(package);
         }
 
         public async Task<T> ReadExcelDataAsync(string path)
         {
             return await Task.Run(() => ReadExcelData(path));
+        }
+        public async Task<T> ReadExcelDataAsync(ExcelPackage package)
+        {
+            return await Task.Run(() => ReadExcelData(package));
         }
     }
 }
