@@ -17,6 +17,7 @@ namespace OneView_MappingSet_MVVM.UI
         public ISourceItemDictionaryReadRepository SourceItemDictionaryReadRepository;
         public ISourceItemListReadRepository SourceItemListReadRepository;
         public ISourceItemListWriteRepository SourceItemListWriteRepository;
+        public IMappingSetWriteRepository MappingSetWriteRepository;
         public IExcelSheetNameRepository ExcelSheetNameRepository;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -31,6 +32,7 @@ namespace OneView_MappingSet_MVVM.UI
             SourceItemDictionaryReadRepository = new SourceItemDictionaryReadRepository(new SourceItemDictionaryReadExcelAccess());
             SourceItemListReadRepository = new SourceItemListReadRepository(new SourceItemListReadExcelAccess());
             SourceItemListWriteRepository = new SourceItemListWriteRepository(new SourceItemListCreateExcelAccess());
+            MappingSetWriteRepository = new MappingSetWriteRepository(new MappingSetCreateExcelAccess());
             ExcelSheetNameRepository = new ExcelSheetNameRepository(new SheetNamesReadExcelAccess());
         }
     }

@@ -22,6 +22,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly ISourceItemDictionaryReadRepository _sourceItemDictionaryRepository;
         private readonly ISourceItemListReadRepository _sourceItemListRepository;
         private readonly ISourceItemListWriteRepository _sourceItemListWriteRepository;
+        private readonly IMappingSetWriteRepository _mappingSetWriteRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
@@ -105,6 +106,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             , ISourceItemDictionaryReadRepository sourceItemDictionaryRepository
             , ISourceItemListReadRepository sourceItemListRepository
             , ISourceItemListWriteRepository sourceItemListWriteRepository
+            , IMappingSetWriteRepository mappingSetWriteRepository
             , IExcelSheetNameRepository excelSheetNameRepository
             )
         {
@@ -115,6 +117,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._sourceItemDictionaryRepository = sourceItemDictionaryRepository;
             this._sourceItemListRepository = sourceItemListRepository;
             this._sourceItemListWriteRepository = sourceItemListWriteRepository;
+            this._mappingSetWriteRepository = mappingSetWriteRepository;
             this._excelSheetNameRepository = excelSheetNameRepository;
             this._mappingSetGeneratorService = mappingSetGeneratorService;
 
@@ -255,6 +258,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 }
                 Log($"Source item list template created: {filePath}");
             }
+            catch
+            {
+                Log($"Source item list creating error");
+            }
             finally
             {
                 SourceItemListCreating = false;
@@ -318,10 +325,16 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 ProcessMappingSetLoading = true;
-                await Task.Delay(3000); // just for test
-                Log("Nothing interesting happend :-D");
-                //await _standardMappingSetRepository.GetDataAsync(filePath);
-                //Log("Source item list Loaded");
+                var filePath = _fileDialog.SaveExcelFile();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    await _mappingSetWriteRepository.WriteDataAsync(filePath);
+                }
+                Log($"Mapping set created: {filePath}");
+            }
+            catch
+            {
+                Log($"Mapping set creating error");
             }
             finally
             {
