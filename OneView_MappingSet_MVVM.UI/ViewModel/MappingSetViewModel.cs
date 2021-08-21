@@ -25,6 +25,10 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly IMappingSetWriteRepository _mappingSetWriteRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
+        private StandardTagList _standardTagList;
+        private SourceItemDictionary _sourceItemDictionary;
+        private SourceItemList _sourceItemList;
+
         public ObservableCollection<string> LoggerItems { get; private set; } = new ObservableCollection<string>();
 
         private ObservableCollection<string> _turbineTypesItems;
@@ -156,7 +160,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 StandardTagListLoading = true;
-                var standardTagList = await _standardTagListRepository.ReadDataAsync(filePath);
+                this._standardTagList = await _standardTagListRepository.ReadDataAsync(filePath);
                 StandardTagListPath = filePath;
                 Log("Standard mapping set loaded");
             }
@@ -192,8 +196,8 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 SourceItemDictionaryLoading = true;              
-                var sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
-                TurbineTypesItems = new ObservableCollection<string>(await _mappingSetGeneratorService.GetTurbineTypesAsync(sourceItemDictionary));
+                this._sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
+                TurbineTypesItems = new ObservableCollection<string>(await _mappingSetGeneratorService.GetTurbineTypesAsync(_sourceItemDictionary));
                 SourceItemDictionaryPath = filePath;
                 Log("Source item dictionary loaded");
             }
@@ -229,7 +233,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             try
             {
                 SourceItemListLoading = true;
-                var sourceItemList = await _sourceItemListRepository.ReadDataAsync(filePath);
+                this._sourceItemList = await _sourceItemListRepository.ReadDataAsync(filePath);
                 SourceItemListPath = filePath;
                 Log("Source item list loaded");
 
@@ -328,6 +332,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 var filePath = _fileDialog.SaveExcelFile();
                 if (!string.IsNullOrEmpty(filePath))
                 {
+                    var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList);
                     await _mappingSetWriteRepository.WriteDataAsync(filePath);
                 }
                 Log($"Mapping set created: {filePath}");
@@ -341,10 +346,16 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 ProcessMappingSetLoading = false;
             }
         }
-        private bool OnProcessMappingSetCanExecute()
+        private bool OnProcessMappingSetCanExecute() // if all file paths are correctly loaded
         {
-            // TODO: execution is possible only when all other files are correctly loaded
-            return true;
+            if (!string.IsNullOrEmpty(StandardTagListPath)
+                && !string.IsNullOrEmpty(SourceItemDictionaryPath)
+                && !string.IsNullOrEmpty(SourceItemListPath)
+                )
+            {
+                return true;
+            }
+            return false;
         }
 
         private void Log(string log)

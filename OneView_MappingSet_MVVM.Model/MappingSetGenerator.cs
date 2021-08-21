@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using OneView_MappingSet_MVVM.Model.ItemsList;
+using OneView_MappingSet_MVVM.Model.Item;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,6 +53,20 @@ namespace OneView_MappingSet_MVVM.Model
         public async Task<IList<string>> GetTurbineTypesAsync(SourceItemDictionary input)
         {
             return await Task.Run(() => GetTurbineTypes(input));
+        }
+
+        public MappingTagList GetMappingSet(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList)
+        {
+            var mappingTagList = new MappingTagList();
+
+            mappingTagList.SourceDataList.Add(new MappingTag() { Tagname = "Test1", CollectorType= "TenMinuteData" });
+            mappingTagList.SourceDataList.Add(new MappingTag() { Tagname = "Test2"});
+
+            return mappingTagList;
+        }
+        public async Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList)
+        {
+            return await Task.Run(() => GetMappingSet(standardTagList, sourceItemDictionary, sourceItemList));
         }
     }
 }
