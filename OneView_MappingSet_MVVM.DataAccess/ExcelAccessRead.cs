@@ -5,6 +5,16 @@ namespace OneView_MappingSet_MVVM.DataAccess
 {
     public abstract class ExcelAccessRead<T>: ExcelAccess<T>
     {
+        protected T GetExcelData(ExcelPackage package)
+        {
+            using (package)
+            {
+                return ReadWriteExcelData(package);
+            }
+        }
+
+        protected abstract T ReadWriteExcelData(ExcelPackage package);
+
         public T ReadExcelData(string path)
         {
             return GetExcelData(GetExcelPackage(path));
