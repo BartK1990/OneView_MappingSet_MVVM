@@ -7,7 +7,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
 {
     public class SourceItemListCreateExcelAccess : ExcelAccessCreate<SourceItemList>
     {
-        protected override SourceItemList ReadWriteExcelData(ExcelPackage package)
+        protected override void PutExcelData(ExcelPackage package, SourceItemList data)
         {
             ExcelWorksheet ws = package.Workbook.Worksheets.Add(MappingSetGenerator.SourceItemListSheetName);
 
@@ -15,7 +15,6 @@ namespace OneView_MappingSet_MVVM.DataAccess
 
             ws.Cells["A1"].AutoFitColumns();
             package.Save();
-            return null;
         }
 
         private static void PrepareSheet(ExcelWorksheet ws)

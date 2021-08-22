@@ -8,7 +8,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
     {
         protected string SheetName;
 
-        protected override T ReadWriteExcelData(ExcelPackage package)
+        protected override T GetExcelData(ExcelPackage package)
         {
             if(!package.Workbook.Worksheets.Any(sheet => sheet.Name == SheetName))
             {

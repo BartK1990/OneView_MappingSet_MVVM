@@ -5,32 +5,32 @@ namespace OneView_MappingSet_MVVM.DataAccess
 {
     public abstract class ExcelAccessCreate<T> : ExcelAccess<T>
     {
-        protected T GetExcelData(ExcelPackage package)
+        protected abstract void PutExcelData(ExcelPackage package, T data);
+
+        protected void PutExcelDataUsingWrapper(ExcelPackage package, T data)
         {
             using (package)
             {
-                return ReadWriteExcelData(package);
+                PutExcelData(package, data);
             }
         }
 
-        protected abstract T ReadWriteExcelData(ExcelPackage package);
-
-        public void WriteExcelData(string path)
+        public void WriteExcelData(string path, T data)
         {
-            GetExcelData(GetExcelPackage(path));
+            PutExcelDataUsingWrapper(GetExcelPackage(path), data);
         }
-        public void WriteExcelData(ExcelPackage package)
+        public void WriteExcelData(ExcelPackage package, T data)
         {
-            GetExcelData(package);
+            PutExcelDataUsingWrapper(package, data);
         }
 
-        public async Task WriteExcelDataAsync(string path)
+        public async Task WriteExcelDataAsync(string path, T data)
         {
-            await Task.Run(() => WriteExcelData(path));
+            await Task.Run(() => WriteExcelData(path, data));
         }
-        public async Task WriteExcelDataAsync(ExcelPackage package)
+        public async Task WriteExcelDataAsync(ExcelPackage package, T data)
         {
-            await Task.Run(() => WriteExcelData(package));
+            await Task.Run(() => WriteExcelData(package, data));
         }  
     }
 }

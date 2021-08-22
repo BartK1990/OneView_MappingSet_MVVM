@@ -6,7 +6,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
 
     public class SheetNamesReadExcelAccess : ExcelAccessRead<ExcelSheetName>
     {
-        protected override ExcelSheetName ReadWriteExcelData(ExcelPackage package)
+        protected override ExcelSheetName GetExcelData(ExcelPackage package)
         {
             ExcelSheetName excelSheetName = new ExcelSheetName();
             foreach (var worksheet in package.Workbook.Worksheets)
