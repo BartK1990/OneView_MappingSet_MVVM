@@ -162,6 +162,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 StandardTagListLoading = true;
                 this._standardTagList = await _standardTagListRepository.ReadDataAsync(filePath);
                 StandardTagListPath = filePath;
+                ProcessMappingSetCommand.RaiseCanExecuteChanged();
                 Log("Standard mapping set loaded");
             }
             catch
@@ -199,6 +200,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 this._sourceItemDictionary = await _sourceItemDictionaryRepository.ReadDataAsync(filePath);
                 TurbineTypesItems = new ObservableCollection<string>(await _mappingSetGeneratorService.GetTurbineTypesAsync(_sourceItemDictionary));
                 SourceItemDictionaryPath = filePath;
+                ProcessMappingSetCommand.RaiseCanExecuteChanged();
                 Log("Source item dictionary loaded");
             }
             catch
@@ -235,6 +237,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 SourceItemListLoading = true;
                 this._sourceItemList = await _sourceItemListRepository.ReadDataAsync(filePath);
                 SourceItemListPath = filePath;
+                ProcessMappingSetCommand.RaiseCanExecuteChanged();
                 Log("Source item list loaded");
 
             }
@@ -258,7 +261,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 var filePath = _fileDialog.SaveExcelFile();
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    await _sourceItemListWriteRepository.WriteDataAsync(filePath);
+                    await _sourceItemListWriteRepository.WriteDataAsync(filePath, null);
                 }
                 Log($"Source item list template created: {filePath}");
             }
@@ -333,7 +336,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList);
-                    await _mappingSetWriteRepository.WriteDataAsync(filePath);
+                    await _mappingSetWriteRepository.WriteDataAsync(filePath, mappingTagList);
                 }
                 Log($"Mapping set created: {filePath}");
             }

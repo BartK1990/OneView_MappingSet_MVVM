@@ -10,9 +10,9 @@ namespace OneView_MappingSet_MVVM.UI.Data.Repositories
         {
         }
 
-        public async Task WriteDataAsync(string path)
+        public async Task WriteDataAsync(string path, MappingTagList data)
         {
-            await ExcelAccess.WriteExcelDataAsync(path);
+            await ExcelAccess.WriteExcelDataAsync(path, data);
         }
     }
 }

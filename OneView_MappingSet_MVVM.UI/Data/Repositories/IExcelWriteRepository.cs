@@ -2,8 +2,8 @@
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public interface IExcelWriteRepository
+    public interface IExcelWriteRepository<TData>
     {
-        Task WriteDataAsync(string path);
+        Task WriteDataAsync(string path, TData data);
     }
 }
