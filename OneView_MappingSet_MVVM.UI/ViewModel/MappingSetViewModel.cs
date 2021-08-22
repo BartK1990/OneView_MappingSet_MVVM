@@ -37,6 +37,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             get => this._turbineTypesItems;
             set { this.SetAndNotify(ref this._turbineTypesItems, value, () => this.TurbineTypesItems); }
         }
+        public string TurbineTypesSelectedItem { get; set; }
 
         private string _loggerText;
         public string LoggerText
@@ -335,7 +336,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 var filePath = _fileDialog.SaveExcelFile();
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList);
+                    var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList, TurbineTypesSelectedItem);
                     await _mappingSetWriteRepository.WriteDataAsync(filePath, mappingTagList);
                 }
                 Log($"Mapping set created: {filePath}");

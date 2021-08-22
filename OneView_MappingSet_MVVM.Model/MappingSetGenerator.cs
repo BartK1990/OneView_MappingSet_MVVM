@@ -55,18 +55,57 @@ namespace OneView_MappingSet_MVVM.Model
             return await Task.Run(() => GetTurbineTypes(input));
         }
 
-        public MappingTagList GetMappingSet(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList)
+        public MappingTagList GetMappingSet(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList, string turbineType)
         {
             var mappingTagList = new MappingTagList();
 
-            mappingTagList.SourceDataList.Add(new MappingTag() { Tagname = "Test1", CollectorType= "TenMinuteData" });
-            mappingTagList.SourceDataList.Add(new MappingTag() { Tagname = "Test2"});
+            var oneTypeDictionary = sourceItemDictionary.SourceDataList
+                .Where(x => x.TurbineType == turbineType).ToList();
+
+            var functions = oneTypeDictionary
+                .Where(f => (f.SourceItemIdentifier == "Function") || string.IsNullOrWhiteSpace(f.SourceItemIdentifier))
+                .ToList();
+
+            foreach (var f in functions)
+            {
+                var mappingTag = new MappingTag();
+                DictionaryItemToMappingTag(f, mappingTag);
+                mappingTagList.SourceDataList.Add(mappingTag);
+            }
+
 
             return mappingTagList;
         }
-        public async Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList)
+        public async Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList, string turbineType)
         {
-            return await Task.Run(() => GetMappingSet(standardTagList, sourceItemDictionary, sourceItemList));
+            return await Task.Run(() => GetMappingSet(standardTagList, sourceItemDictionary, sourceItemList, turbineType));
+        }
+
+        private void Iec6140025TagToMappingTag(Iec6140025Tag iecTag, MappingTag mappingTag)
+        {
+            mappingTag.PresentationName = iecTag.PresentationName;
+            mappingTag.SiType = iecTag.OvSiType;
+            mappingTag.DataType = iecTag.DataType;
+            mappingTag.Description = iecTag.Description;
+        }
+
+        private void DictionaryItemToMappingTag(DictionaryItem dictionaryItem, MappingTag mappingTag)
+        {
+            mappingTag.Tagname = dictionaryItem.Tagname;
+            mappingTag.SourceItemIdentifier = dictionaryItem.SourceItemIdentifier;
+            mappingTag.SourceItemType = dictionaryItem.SourceItemType;
+            mappingTag.CollectorType = dictionaryItem.CollectorType;
+            mappingTag.ScaleFactor = dictionaryItem.ScaleFactor;
+            mappingTag.ScaleOffset = dictionaryItem.ScaleOffset;
+            mappingTag.Operation = dictionaryItem.Operation;
+            mappingTag.ExpressionModel = dictionaryItem.ExpressionModel;
+            mappingTag.ReadExpressionType = dictionaryItem.ReadExpressionType;
+            mappingTag.ReadExpressionMappingSetTagValueId = dictionaryItem.ReadExpressionMappingSetTagValueId;
+            mappingTag.ReadExpression = dictionaryItem.ReadExpression;
+            mappingTag.WriteExpressionType = dictionaryItem.WriteExpressionType;
+            mappingTag.WriteExpressionMappingSetTagValueId = dictionaryItem.WriteExpressionMappingSetTagValueId;
+            mappingTag.WriteExpression = dictionaryItem.WriteExpression;
+            mappingTag.TagMapping = dictionaryItem.TagMapping;
         }
     }
 }

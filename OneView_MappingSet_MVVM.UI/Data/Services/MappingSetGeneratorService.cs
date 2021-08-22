@@ -24,9 +24,9 @@ namespace OneView_MappingSet_MVVM.UI.Data.Services
             return await _mappingSetGenerator.GetTurbineTypesAsync(sid);
         }
 
-        public async Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList)
+        public async Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList, string turbineType)
         {
-            return await _mappingSetGenerator.GetMappingSetAsync(standardTagList, sourceItemDictionary, sourceItemList);
+            return await _mappingSetGenerator.GetMappingSetAsync(standardTagList, sourceItemDictionary, sourceItemList, turbineType);
         }
     }
 }

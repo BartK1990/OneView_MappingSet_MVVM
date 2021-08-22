@@ -9,6 +9,6 @@ namespace OneView_MappingSet_MVVM.UI.Data.Services
     {
         Task<ExcelFileType> GetExcelFileTypeAsync(IList<string> sheetList);
         Task<IList<string>> GetTurbineTypesAsync(SourceItemDictionary sid);
-        Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList);
+        Task<MappingTagList> GetMappingSetAsync(StandardTagList standardTagList, SourceItemDictionary sourceItemDictionary, SourceItemList sourceItemList, string turbineType);
     }
 }
