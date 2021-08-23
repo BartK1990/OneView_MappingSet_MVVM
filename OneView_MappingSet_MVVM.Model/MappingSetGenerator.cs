@@ -62,17 +62,32 @@ namespace OneView_MappingSet_MVVM.Model
             var oneTypeDictionary = sourceItemDictionary.SourceDataList
                 .Where(x => x.TurbineType == turbineType).ToList();
 
-            var functions = oneTypeDictionary
+            // Find functions in chosen turbine type
+            var functionTags = oneTypeDictionary
                 .Where(f => (f.SourceItemIdentifier == "Function") || string.IsNullOrWhiteSpace(f.SourceItemIdentifier))
-                .ToList();
-
-            foreach (var f in functions)
+                .ToList();   
+            foreach (var f in functionTags)
             {
                 var mappingTag = new MappingTag();
                 DictionaryItemToMappingTag(f, mappingTag);
                 mappingTagList.SourceDataList.Add(mappingTag);
             }
 
+            // Find source item identifires
+            var sourceItems = oneTypeDictionary
+                .Where(si => sourceItemList.SourceDataList.Any(sil => sil.SourceItemIdentifier == si.SourceItemIdentifier)).ToList();
+            foreach (var si in sourceItems)
+            {
+                var mappingTag = new MappingTag();
+                DictionaryItemToMappingTag(si, mappingTag);
+                mappingTagList.SourceDataList.Add(mappingTag);
+            }
+
+            // Add informations from Standard Tag List
+            foreach (var mt in mappingTagList.SourceDataList)
+            {
+                Iec6140025TagToMappingTag(standardTagList.SourceDataList.FirstOrDefault(s => s.Tagname == mt.Tagname), mt);
+            }
 
             return mappingTagList;
         }
