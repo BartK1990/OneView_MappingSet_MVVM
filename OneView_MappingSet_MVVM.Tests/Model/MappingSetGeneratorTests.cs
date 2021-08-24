@@ -265,14 +265,14 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         {
             var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
             var result = msp.GetMappingSet(null, sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains) && (expectedResult.SourceDataList.Count == result.SourceDataList.Count));
         }
         [Test]
         public async Task GetTurbineTypesAsync_1ValidFunc1NotValid_1Function()
         {
             var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
             var result = await msp.GetMappingSetAsync(new StandardTagList(), sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains) && (expectedResult.SourceDataList.Count == result.SourceDataList.Count));
         }
         private MappingTagList GetTurbineTypes_1ValidFunc1NotValid(out SourceItemDictionary sid, out SourceItemList sil, out string turbineType)
         {
@@ -312,14 +312,14 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         {
             var expectedResult = GetTurbineTypes_2ValidFunc(out var sid, out var sil, out var turbineType);
             var result = msp.GetMappingSet(null, sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains) && (expectedResult.SourceDataList.Count == result.SourceDataList.Count));
         }
         [Test]
         public async Task GetTurbineTypesAsync_2ValidFunc_2Function()
         {
             var expectedResult = GetTurbineTypes_2ValidFunc(out var sid, out var sil, out var turbineType);
             var result = await msp.GetMappingSetAsync(new StandardTagList(), sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains) && (expectedResult.SourceDataList.Count == result.SourceDataList.Count));
         }
         private MappingTagList GetTurbineTypes_2ValidFunc(out SourceItemDictionary sid, out SourceItemList sil, out string turbineType)
         {
