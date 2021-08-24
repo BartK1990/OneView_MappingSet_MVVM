@@ -88,7 +88,19 @@ namespace OneView_MappingSet_MVVM.Model
                 {
                     var m = Regex.Matches(f.ReadExpression, regexPattern);
                     var matches = Regex.Matches(f.ReadExpression, regexPattern).Select(m => m.Groups[regexGroupName].Value).ToList();
-                    tagOk = matches.All(m => functionAndFoundTagnames.Contains(m));
+                    if(!matches.All(m => functionAndFoundTagnames.Contains(m)))
+                    {
+                        tagOk = false;
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(f.WriteExpression))
+                {
+                    var m = Regex.Matches(f.WriteExpression, regexPattern);
+                    var matches = Regex.Matches(f.WriteExpression, regexPattern).Select(m => m.Groups[regexGroupName].Value).ToList();
+                    if (!matches.All(m => functionAndFoundTagnames.Contains(m)))
+                    {
+                        tagOk = false;
+                    }
                 }
                 if (tagOk)
                 {

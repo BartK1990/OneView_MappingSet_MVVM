@@ -265,14 +265,14 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         {
             var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
             var result = msp.GetMappingSet(null, sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.SequenceEqual(result.SourceDataList));
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
         }
         [Test]
         public async Task GetTurbineTypesAsync_1ValidFunc1NotValid_1Function()
         {
             var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
             var result = await msp.GetMappingSetAsync(new StandardTagList(), sid, sil, turbineType);
-            Assert.IsTrue(expectedResult.SourceDataList.SequenceEqual(result.SourceDataList));             
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
         }
         private MappingTagList GetTurbineTypes_1ValidFunc1NotValid(out SourceItemDictionary sid, out SourceItemList sil, out string turbineType)
         {
@@ -301,6 +301,56 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 SourceDataList = new List<MappingTag>()
                 {
                     new MappingTag(){Tagname="Tagname2", SourceItemIdentifier="sii2", SiType = "Double"}
+                }
+            };
+
+            return expectedResult;
+        }
+
+        [Test]
+        public void GetMappingSet_2ValidFunc_2Function()
+        {
+            var expectedResult = GetTurbineTypes_2ValidFunc(out var sid, out var sil, out var turbineType);
+            var result = msp.GetMappingSet(null, sid, sil, turbineType);
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+        }
+        [Test]
+        public async Task GetTurbineTypesAsync_2ValidFunc_2Function()
+        {
+            var expectedResult = GetTurbineTypes_2ValidFunc(out var sid, out var sil, out var turbineType);
+            var result = await msp.GetMappingSetAsync(new StandardTagList(), sid, sil, turbineType);
+            Assert.IsTrue(expectedResult.SourceDataList.All(result.SourceDataList.Contains));
+        }
+        private MappingTagList GetTurbineTypes_2ValidFunc(out SourceItemDictionary sid, out SourceItemList sil, out string turbineType)
+        {
+            turbineType = "Type1";
+
+            sid = new SourceItemDictionary()
+            {
+                SourceDataList = new List<DictionaryItem>()
+                {
+                    new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname1", ReadExpression=@"return HistValSngl(""Tagname3"", Now(),TimeSpan(1,0,0));"}
+                    ,new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname2", SourceItemIdentifier="sii2", SiType="Double"}
+                    ,new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname3", SourceItemIdentifier="sii3"}
+                }
+            };
+
+            sil = new SourceItemList()
+            {
+                SourceDataList = new List<SourceItem>()
+                {
+                    new SourceItem(){SourceItemIdentifier="sii2"}
+                    ,new SourceItem(){SourceItemIdentifier="sii3"}
+                }
+            };
+
+            var expectedResult = new MappingTagList()
+            {
+                SourceDataList = new List<MappingTag>()
+                {
+                    new MappingTag(){Tagname="Tagname1", ReadExpression=@"return HistValSngl(""Tagname3"", Now(),TimeSpan(1,0,0));"}
+                    ,new MappingTag(){Tagname="Tagname2", SourceItemIdentifier="sii2", SiType = "Double"}
+                    ,new MappingTag(){Tagname="Tagname3", SourceItemIdentifier="sii3"}
                 }
             };
 
