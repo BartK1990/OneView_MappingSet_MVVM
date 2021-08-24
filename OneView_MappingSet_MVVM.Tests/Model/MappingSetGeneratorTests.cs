@@ -1,6 +1,9 @@
 ﻿using NUnit.Framework;
 using OneView_MappingSet_MVVM.Model;
+using OneView_MappingSet_MVVM.Model.Item;
+using OneView_MappingSet_MVVM.Model.ItemsList;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.Tests.Model
@@ -32,16 +35,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         [Test]
         public void CheckIfConatainsValidSheet_ValidExcelType1_ExcelFileType()
         {
-            var result = msp.CheckIfConatainsValidSheet(ValidExcelType1_ExcelFileType());
+            var result = msp.CheckIfConatainsValidSheet(CheckIfConatainsValidSheet_ValidExcelType1());
             Assert.AreEqual(ExcelFileType.StandardTagList, result);
         }
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_ValidExcelType1_ExcelFileType()
         {
-            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType1_ExcelFileType());
+            var result = await msp.CheckIfConatainsValidSheetAsync(CheckIfConatainsValidSheet_ValidExcelType1());
             Assert.AreEqual(ExcelFileType.StandardTagList, result);
         }
-        private static IList<string> ValidExcelType1_ExcelFileType()
+        private static IList<string> CheckIfConatainsValidSheet_ValidExcelType1()
         {
             var sheetList = new List<string>
             {
@@ -53,16 +56,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         [Test]
         public void CheckIfConatainsValidSheet_ValidExcelType2_ExcelFileType()
         {
-            var result = msp.CheckIfConatainsValidSheet(ValidExcelType2_ExcelFileType());
+            var result = msp.CheckIfConatainsValidSheet(CheckIfConatainsValidSheet_ValidExcelType2());
             Assert.AreEqual(ExcelFileType.SourceDictionary, result);
         }
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_ValidExcelType2_ExcelFileType()
         {
-            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType2_ExcelFileType());
+            var result = await msp.CheckIfConatainsValidSheetAsync(CheckIfConatainsValidSheet_ValidExcelType2());
             Assert.AreEqual(ExcelFileType.SourceDictionary, result);
         }
-        private static IList<string> ValidExcelType2_ExcelFileType()
+        private static IList<string> CheckIfConatainsValidSheet_ValidExcelType2()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -76,16 +79,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         [Test]
         public void CheckIfConatainsValidSheet_ValidExcelType3_ExcelFileType()
         {
-            var result = msp.CheckIfConatainsValidSheet(ValidExcelType3_ExcelFileType());
+            var result = msp.CheckIfConatainsValidSheet(CheckIfConatainsValidSheet_ValidExcelType3());
             Assert.AreEqual(ExcelFileType.SourceList, result);
         }
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_ValidExcelType3_ExcelFileType()
         {
-            var result = await msp.CheckIfConatainsValidSheetAsync(ValidExcelType3_ExcelFileType());
+            var result = await msp.CheckIfConatainsValidSheetAsync(CheckIfConatainsValidSheet_ValidExcelType3());
             Assert.AreEqual(ExcelFileType.SourceList, result);
         }
-        private static IList<string> ValidExcelType3_ExcelFileType()
+        private static IList<string> CheckIfConatainsValidSheet_ValidExcelType3()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -99,16 +102,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         [Test]
         public void CheckIfConatainsValidSheet_InvalidExcelType1_ExcelFileType()
         {
-            var result = msp.CheckIfConatainsValidSheet(InvalidExcelType1_ExcelFileType());
+            var result = msp.CheckIfConatainsValidSheet(CheckIfConatainsValidSheet_InvalidExcelType1());
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_InvalidExcelType1_ExcelFileType()
         {
-            var result = await msp.CheckIfConatainsValidSheetAsync(InvalidExcelType1_ExcelFileType());
+            var result = await msp.CheckIfConatainsValidSheetAsync(CheckIfConatainsValidSheet_InvalidExcelType1());
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
-        private static IList<string> InvalidExcelType1_ExcelFileType()
+        private static IList<string> CheckIfConatainsValidSheet_InvalidExcelType1()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>
@@ -122,16 +125,16 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         [Test]
         public void CheckIfConatainsValidSheet_EmptyCollection_ExcelFileType()
         {
-            var result = msp.CheckIfConatainsValidSheet(EmptyCollection_ExcelFileType());
+            var result = msp.CheckIfConatainsValidSheet(CheckIfConatainsValidSheet_EmptyCollection());
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
         [Test]
         public async Task CheckIfConatainsValidSheetAsync_EmptyCollection_ExcelFileType()
         {
-            var result = await msp.CheckIfConatainsValidSheetAsync(EmptyCollection_ExcelFileType());
+            var result = await msp.CheckIfConatainsValidSheetAsync(CheckIfConatainsValidSheet_EmptyCollection());
             Assert.AreEqual(ExcelFileType.Invalid, result);
         }
-        private static IList<string> EmptyCollection_ExcelFileType()
+        private static IList<string> CheckIfConatainsValidSheet_EmptyCollection()
         {
             var msp = new MappingSetGenerator();
             var sheetList = new List<string>();
@@ -140,6 +143,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
         }
 
         #endregion
+
         #region GetTurbineTypes
         [Test]
         public void GetTurbineTypes_2Types_2Items()
@@ -150,7 +154,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 ,"Nordex"
             };
 
-            var result = msp.GetTurbineTypes(TwoTypes_2Items());
+            var result = msp.GetTurbineTypes(GetTurbineTypes_2Types());
             Assert.AreEqual(exptectedOutput, result);
         }
         [Test]
@@ -162,10 +166,10 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 ,"Nordex"
             };
 
-            var result = await msp.GetTurbineTypesAsync(TwoTypes_2Items());
+            var result = await msp.GetTurbineTypesAsync(GetTurbineTypes_2Types());
             Assert.AreEqual(exptectedOutput, result);
         }
-        private SourceItemDictionary TwoTypes_2Items()
+        private SourceItemDictionary GetTurbineTypes_2Types()
         {
             var sid = new SourceItemDictionary();
             sid.SourceDataList.Add(new DictionaryItem() { TurbineType = "Vestas" });
@@ -185,7 +189,7 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "Vestas"
             };
 
-            var result = msp.GetTurbineTypes(OneType_1Item());
+            var result = msp.GetTurbineTypes(GetTurbineTypes_1Type());
             Assert.AreEqual(exptectedOutput, result);
         }
         [Test]
@@ -196,10 +200,10 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "Vestas"
             };
 
-            var result = await msp.GetTurbineTypesAsync(OneType_1Item());
+            var result = await msp.GetTurbineTypesAsync(GetTurbineTypes_1Type());
             Assert.AreEqual(exptectedOutput, result);
         }
-        private SourceItemDictionary OneType_1Item()
+        private SourceItemDictionary GetTurbineTypes_1Type()
         {
             var sid = new SourceItemDictionary();
             sid.SourceDataList.Add(new DictionaryItem() { TurbineType = "Vestas" });
@@ -216,9 +220,10 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "GE"
             };
 
-            var result = msp.GetTurbineTypes(OneItem_1Item());
+            var result = msp.GetTurbineTypes(GetTurbineTypes_1Item());
             Assert.AreEqual(exptectedOutput, result);
-        }        
+        }
+        [Test]
         public async Task GetTurbineTypesAsync_1Item_1Item()
         {
             var exptectedOutput = new List<string>()
@@ -226,10 +231,10 @@ namespace OneView_MappingSet_MVVM.Tests.Model
                 "GE"
             };
 
-            var result = await msp.GetTurbineTypesAsync(OneItem_1Item());
+            var result = await msp.GetTurbineTypesAsync(GetTurbineTypes_1Item());
             Assert.AreEqual(exptectedOutput, result);
         }
-        private SourceItemDictionary OneItem_1Item()
+        private SourceItemDictionary GetTurbineTypes_1Item()
         {
             var sid = new SourceItemDictionary();
             sid.SourceDataList.Add(new DictionaryItem() { TurbineType = "GE" });
@@ -251,6 +256,55 @@ namespace OneView_MappingSet_MVVM.Tests.Model
 
             var result = await msp.GetTurbineTypesAsync(new SourceItemDictionary());
             Assert.AreEqual(exptectedOutput, result);
+        }
+        #endregion
+
+        #region GetMappingSet
+        [Test]
+        public void GetMappingSet_1ValidFunc1NotValid_1Function()
+        {
+            var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
+            var result = msp.GetMappingSet(null, sid, sil, turbineType);
+            Assert.IsTrue(expectedResult.SourceDataList.SequenceEqual(result.SourceDataList));
+        }
+        [Test]
+        public async Task GetTurbineTypesAsync_1ValidFunc1NotValid_1Function()
+        {
+            var expectedResult = GetTurbineTypes_1ValidFunc1NotValid(out var sid, out var sil, out var turbineType);
+            var result = await msp.GetMappingSetAsync(new StandardTagList(), sid, sil, turbineType);
+            Assert.IsTrue(expectedResult.SourceDataList.SequenceEqual(result.SourceDataList));             
+        }
+        private MappingTagList GetTurbineTypes_1ValidFunc1NotValid(out SourceItemDictionary sid, out SourceItemList sil, out string turbineType)
+        {
+            turbineType = "Type1";
+
+            sid = new SourceItemDictionary()
+            {
+                SourceDataList = new List<DictionaryItem>()
+                {
+                    new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname1", ReadExpression=@"return HistValSngl(""Tagname3"", Now(),TimeSpan(1,0,0));"}
+                    ,new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname2", SourceItemIdentifier="sii2", SiType="Double"}
+                    ,new DictionaryItem(){TurbineType=turbineType, Tagname="Tagname3", SourceItemIdentifier="sii3"}
+                }
+            };
+
+            sil = new SourceItemList()
+            {
+                SourceDataList = new List<SourceItem>()
+                {
+                    new SourceItem(){SourceItemIdentifier="sii2"}
+                }
+            };
+
+            var expectedResult = new MappingTagList()
+            {
+                SourceDataList = new List<MappingTag>()
+                {
+                    new MappingTag(){Tagname="Tagname2", SourceItemIdentifier="sii2", SiType = "Double"}
+                }
+            };
+
+            return expectedResult;
         }
         #endregion
     }

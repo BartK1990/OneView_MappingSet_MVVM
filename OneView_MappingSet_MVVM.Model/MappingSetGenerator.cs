@@ -1,7 +1,8 @@
-﻿using OneView_MappingSet_MVVM.Model.ItemsList;
-using OneView_MappingSet_MVVM.Model.Item;
+﻿using OneView_MappingSet_MVVM.Model.Item;
+using OneView_MappingSet_MVVM.Model.ItemsList;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.Model
@@ -62,17 +63,6 @@ namespace OneView_MappingSet_MVVM.Model
             var oneTypeDictionary = sourceItemDictionary.SourceDataList
                 .Where(x => x.TurbineType == turbineType).ToList();
 
-            // Find functions in chosen turbine type
-            var functionTags = oneTypeDictionary
-                .Where(f => (f.SourceItemIdentifier == "Function") || string.IsNullOrWhiteSpace(f.SourceItemIdentifier))
-                .ToList();   
-            foreach (var f in functionTags)
-            {
-                var mappingTag = new MappingTag();
-                DictionaryItemToMappingTag(f, mappingTag);
-                mappingTagList.SourceDataList.Add(mappingTag);
-            }
-
             // Find source item identifires
             var sourceItems = oneTypeDictionary
                 .Where(si => sourceItemList.SourceDataList.Any(sil => sil.SourceItemIdentifier == si.SourceItemIdentifier)).ToList();
@@ -83,10 +73,38 @@ namespace OneView_MappingSet_MVVM.Model
                 mappingTagList.SourceDataList.Add(mappingTag);
             }
 
-            // Add informations from Standard Tag List
-            foreach (var mt in mappingTagList.SourceDataList)
+            // Find valid functions in chosen turbine type
+            var functionTags = oneTypeDictionary
+                .Where(f => !string.IsNullOrWhiteSpace(f.ReadExpression) || !string.IsNullOrWhiteSpace(f.WriteExpression))
+                .ToList();
+            var functionAndFoundTagnames = functionTags.Select(f => f.Tagname).ToList();
+            functionAndFoundTagnames.AddRange(mappingTagList.SourceDataList.Select(s => s.Tagname).ToList());
+            foreach (var f in functionTags)
             {
-                Iec6140025TagToMappingTag(standardTagList.SourceDataList.FirstOrDefault(s => s.Tagname == mt.Tagname), mt);
+                var tagOk = true;
+                const string regexGroupName = "tag";
+                var regexPattern = $@"\( *\""(?<{regexGroupName}>.*?)\"""; // Take matches like ("<tagname>")
+                if (!string.IsNullOrWhiteSpace(f.ReadExpression))
+                {
+                    var m = Regex.Matches(f.ReadExpression, regexPattern);
+                    var matches = Regex.Matches(f.ReadExpression, regexPattern).Select(m => m.Groups[regexGroupName].Value).ToList();
+                    tagOk = matches.All(m => functionAndFoundTagnames.Contains(m));
+                }
+                if (tagOk)
+                {
+                    var mappingTag = new MappingTag();
+                    DictionaryItemToMappingTag(f, mappingTag);
+                    mappingTagList.SourceDataList.Add(mappingTag);
+                }
+            }
+
+            // Add informations from Standard Tag List  
+            if (standardTagList?.SourceDataList != null && standardTagList.SourceDataList.Count > 0)
+            {
+                foreach (var mt in mappingTagList.SourceDataList)
+                {
+                    Iec6140025TagToMappingTag(standardTagList.SourceDataList.FirstOrDefault(s => s.Tagname == mt.Tagname), mt);
+                }
             }
 
             return mappingTagList;
@@ -109,6 +127,7 @@ namespace OneView_MappingSet_MVVM.Model
             mappingTag.Tagname = dictionaryItem.Tagname;
             mappingTag.SourceItemIdentifier = dictionaryItem.SourceItemIdentifier;
             mappingTag.SourceItemType = dictionaryItem.SourceItemType;
+            mappingTag.SiType = dictionaryItem.SiType;
             mappingTag.CollectorType = dictionaryItem.CollectorType;
             mappingTag.ScaleFactor = dictionaryItem.ScaleFactor;
             mappingTag.ScaleOffset = dictionaryItem.ScaleOffset;
