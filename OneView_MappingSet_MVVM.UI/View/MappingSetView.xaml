@@ -9,7 +9,7 @@
       xmlns:fa5="http://schemas.fontawesome.com/icons/" 
       xmlns:converters="clr-namespace:OneView_MappingSet_MVVM.UI.View.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="320" d:DesignWidth="600"
+      d:DesignHeight="400" d:DesignWidth="600"
       Title="MappingSetView">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -22,6 +22,8 @@
             <RowDefinition Height="50px" />
             <RowDefinition Height="2px" />
             <RowDefinition Height="50px" />
+            <RowDefinition Height="2px" />
+            <RowDefinition Height="30px" />
             <RowDefinition Height="40px" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -83,10 +85,25 @@
                 </Grid>
             </Border>
         </DockPanel>
-        <DockPanel Grid.Row="5">
+        <DockPanel Grid.Row="6">
+            <Border Style="{StaticResource BorderDefault}">
+                <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2 2 2 2" Background="{StaticResource BlockBackgroundColor}">
+                    <Label>Version:</Label>
+                    <DockPanel VerticalAlignment="Center">
+                        <RadioButton Content="2.1" Margin="0 0 4 0"/>
+                        <RadioButton Content="3.1" Margin="0 0 4 0"/>
+                        <RadioButton Content="4.4.0" Margin="0 0 4 0"/>
+                        <RadioButton Content="4.4.4" Margin="0 0 4 0"/>
+                        <RadioButton Content="4.5.0" Margin="0 0 4 0"/>
+                        <RadioButton Content="4.5.1" Margin="0 0 4 0"/>
+                    </DockPanel>
+                </DockPanel>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="7">
             <DockPanel HorizontalAlignment="Center">
                 <ComboBox x:Name="ProcessTurbineTypesList" 
-                         Margin="0 0 10 0" Style="{StaticResource ComboBoxDefault}" Width="200" Height="24"
+                         Margin="0 0 10 0" Style="{StaticResource ComboBoxDefault}" Width="260" Height="24"
                          IsSynchronizedWithCurrentItem="True"
                          ItemsSource="{Binding TurbineTypesItems}"
                          SelectedItem="{Binding TurbineTypesSelectedItem, Mode=OneWayToSource}"/>
@@ -97,7 +114,7 @@
                 <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding ProcessMappingSetLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
             </DockPanel>
         </DockPanel>
-        <Grid Grid.Row="6">
+        <Grid Grid.Row="8">
             <Border Style="{StaticResource BorderDefault}">
                 <ScrollViewer>
                     <TextBox x:Name="LogConsole" Text="{Binding Path=LoggerText, Mode=OneWay}" IsReadOnly="True" Background="{StaticResource BlockBackgroundColor}" 
