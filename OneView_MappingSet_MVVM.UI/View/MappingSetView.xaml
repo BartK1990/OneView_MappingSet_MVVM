@@ -87,7 +87,7 @@
         </DockPanel>
         <DockPanel Grid.Row="6">
             <Border Style="{StaticResource BorderDefault}">
-                <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2 2 2 2" Background="{StaticResource BlockBackgroundColor}">
+                <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2 2 2 2">
                     <Label>Version:</Label>
                     <DockPanel VerticalAlignment="Center">
                         <RadioButton Content="3.1" Margin="0 0 4 0"/>
@@ -100,18 +100,28 @@
             </Border>
         </DockPanel>
         <DockPanel Grid.Row="7">
-            <DockPanel HorizontalAlignment="Center">
-                <ComboBox x:Name="ProcessTurbineTypesList" 
-                         Margin="0 0 10 0" Style="{StaticResource ComboBoxDefault}" Width="260" Height="24"
-                         IsSynchronizedWithCurrentItem="True"
-                         ItemsSource="{Binding TurbineTypesItems}"
-                         SelectedItem="{Binding TurbineTypesSelectedItem, Mode=OneWayToSource}"/>
-                <Border Width="120" Margin="0 2 0 2" Style="{StaticResource BorderDefault}">
-                    <Button x:Name="ProcessButton" Command="{Binding ProcessMappingSetCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </Border>
-                <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding ProcessMappingSetLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
-                <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding ProcessMappingSetLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
-            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100px" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <ComboBox x:Name="ProcessTurbineTypesList" 
+                             Margin="0 0 10 0" Style="{StaticResource ComboBoxDefault}" Width="220" Height="24"
+                             IsSynchronizedWithCurrentItem="True"
+                             ItemsSource="{Binding TurbineTypesItems}"
+                             SelectedItem="{Binding TurbineTypesSelectedItem, Mode=OneWayToSource}"/>
+                    <Border Width="120" Margin="0 2 0 2" Style="{StaticResource BorderDefault}">
+                        <Button x:Name="ProcessButton" Command="{Binding ProcessMappingSetCommand}" Content="Process" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Border>
+                    <fa5:SvgAwesome Icon="Solid_Fan" Spin="{Binding ProcessMappingSetLoading}" SpinDuration="2" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                    <fa5:SvgAwesome Icon="Solid_Wind" Visibility="{Binding ProcessMappingSetLoading, Converter={StaticResource BooleanToVisibilityConverter}}" FlipOrientation="Horizontal" Margin="4 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource IconsForegroundColor}"/>
+                </DockPanel>
+                <DockPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="24">
+                    <Label Content="Drop files here" FontSize="10" Opacity="0.5"/>
+                    <fa5:SvgAwesome Icon="Solid_ArrowDown" Height="20" Margin="2 0 4 0" Foreground="{StaticResource IconsForegroundColor}"/>
+                </DockPanel>
+            </Grid>
         </DockPanel>
         <Grid Grid.Row="8">
             <Border Style="{StaticResource BorderDefault}">
