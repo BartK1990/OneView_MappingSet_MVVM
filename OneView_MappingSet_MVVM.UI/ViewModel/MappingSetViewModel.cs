@@ -109,7 +109,8 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         public int OneViewVersion
         {
             get => this._oneViewVersion;
-            set { this.SetAndNotify(ref this._oneViewVersion, value, () => this.OneViewVersion); }
+            set { this.SetAndNotify(ref this._oneViewVersion, value, () => this.OneViewVersion);
+                ProcessMappingSetCommand.RaiseCanExecuteChanged(); }
         }
 
         public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
@@ -363,6 +364,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             if (!string.IsNullOrEmpty(StandardTagListPath)
                 && !string.IsNullOrEmpty(SourceItemDictionaryPath)
                 && !string.IsNullOrEmpty(SourceItemListPath)
+                && OneViewVersion > 0
                 )
             {
                 return true;
