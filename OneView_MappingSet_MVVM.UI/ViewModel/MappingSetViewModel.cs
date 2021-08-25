@@ -105,6 +105,13 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
         }
 
+        private int _oneViewVersion;
+        public int OneViewVersion
+        {
+            get => this._oneViewVersion;
+            set { this.SetAndNotify(ref this._oneViewVersion, value, () => this.OneViewVersion); }
+        }
+
         public MappingSetViewModel(IExcelFileDialog fileDialog, IErrorHandler errorHandler
             , IMappingSetGeneratorService mappingSetGeneratorService
             , IStandardTagListReadRepository standardMappingSetRepository
@@ -340,6 +347,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                     await _mappingSetWriteRepository.WriteDataAsync(filePath, mappingTagList);
                 }
                 Log($"Mapping set created: {filePath}");
+                Log(OneViewVersion.ToString());
             }
             catch
             {

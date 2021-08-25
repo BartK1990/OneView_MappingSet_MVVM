@@ -17,7 +17,6 @@ namespace OneView_MappingSet_MVVM.UI.View.Converters
             if (value != null && (bool)value)
                 return Visibility.Visible;
             return Visibility.Hidden;
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
