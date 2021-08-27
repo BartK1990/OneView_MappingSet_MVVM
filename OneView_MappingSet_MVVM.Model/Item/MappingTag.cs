@@ -6,7 +6,10 @@ namespace OneView_MappingSet_MVVM.Model.Item
     public class MappingTag : IEquatable<MappingTag>
     {
         public string Tagname { get; set; }
-        public string PresentationName { get; set; }
+        public string PresentationNameEnglish { get; set; }
+        public string PresentationNameGerman { get; set; }
+        public string PresentationNameSpanish { get; set; }
+        public string PresentationNamePolish { get; set; }
         public string SiType { get; set; }
         public string DataType { get; set; }
         public string Description { get; set; }
@@ -16,6 +19,8 @@ namespace OneView_MappingSet_MVVM.Model.Item
         public string ScaleFactor { get; set; }
         public string ScaleOffset { get; set; }
         public string Operation { get; set; }
+        public string IsStatusTag { get; set; }
+        public string QualityCondition { get; set; }
         public string ExpressionModel { get; set; }
         public string ReadExpressionType { get; set; }
         public string ReadExpressionMappingSetTagValueId { get; set; }
@@ -30,7 +35,10 @@ namespace OneView_MappingSet_MVVM.Model.Item
             if (other == null)
                 return false;
             if (this.Tagname == other.Tagname
-                && this.PresentationName == other.PresentationName
+                && this.PresentationNameEnglish == other.PresentationNameEnglish
+                && this.PresentationNameGerman == other.PresentationNameGerman
+                && this.PresentationNameSpanish == other.PresentationNameSpanish
+                && this.PresentationNamePolish == other.PresentationNamePolish
                 && this.SiType == other.SiType
                 && this.DataType == other.DataType
                 && this.Description == other.Description
@@ -40,6 +48,8 @@ namespace OneView_MappingSet_MVVM.Model.Item
                 && this.ScaleFactor == other.ScaleFactor
                 && this.ScaleOffset == other.ScaleOffset
                 && this.Operation == other.Operation
+                && this.IsStatusTag == other.IsStatusTag
+                && this.QualityCondition == other.QualityCondition
                 && this.ExpressionModel == other.ExpressionModel
                 && this.ReadExpressionType == other.ReadExpressionType
                 && this.ReadExpressionMappingSetTagValueId == other.ReadExpressionMappingSetTagValueId

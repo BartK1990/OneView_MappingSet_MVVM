@@ -5,6 +5,7 @@ using OneView_MappingSet_MVVM.UI.Event;
 using OneView_MappingSet_MVVM.UI.View.Helpers;
 using OneView_MappingSet_MVVM.UI.View.Services;
 using OneView_MappingSet_MVVM.UI.ViewModel.Commands;
+using OneView_MappingSet_MVVM.UI.ViewModel.Enums;
 using OneView_MappingSet_MVVM.UI.ViewModel.Services;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly ISourceItemDictionaryReadRepository _sourceItemDictionaryRepository;
         private readonly ISourceItemListReadRepository _sourceItemListRepository;
         private readonly ISourceItemListWriteRepository _sourceItemListWriteRepository;
-        private readonly IMappingSetWriteRepository _mappingSetWriteRepository;
+        private readonly IMappingSetWriteRepository _mappingSet451WriteRepository;
+        private readonly IMappingSetWriteRepository _mappingSet450WriteRepository;
+        private readonly IMappingSetWriteRepository _mappingSet444WriteRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         private StandardTagList _standardTagList;
@@ -105,11 +108,11 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             set { this.SetAndNotify(ref this._dragAndDropFilesLoading, value, () => this.DragAndDropFilesLoading); }
         }
 
-        private int _oneViewVersion;
-        public int OneViewVersion
+        private int _oneViewChosenVersion;
+        public int OneViewChosenVersion
         {
-            get => this._oneViewVersion;
-            set { this.SetAndNotify(ref this._oneViewVersion, value, () => this.OneViewVersion);
+            get => this._oneViewChosenVersion;
+            set { this.SetAndNotify(ref this._oneViewChosenVersion, value, () => this.OneViewChosenVersion);
                 ProcessMappingSetCommand.RaiseCanExecuteChanged(); }
         }
 
@@ -119,7 +122,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             , ISourceItemDictionaryReadRepository sourceItemDictionaryRepository
             , ISourceItemListReadRepository sourceItemListRepository
             , ISourceItemListWriteRepository sourceItemListWriteRepository
-            , IMappingSetWriteRepository mappingSetWriteRepository
+            , IMappingSetWriteRepository mappingSet451WriteRepository
+            , IMappingSetWriteRepository mappingSet450WriteRepository
+            , IMappingSetWriteRepository mappingSet444WriteRepository
             , IExcelSheetNameRepository excelSheetNameRepository
             )
         {
@@ -130,7 +135,9 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._sourceItemDictionaryRepository = sourceItemDictionaryRepository;
             this._sourceItemListRepository = sourceItemListRepository;
             this._sourceItemListWriteRepository = sourceItemListWriteRepository;
-            this._mappingSetWriteRepository = mappingSetWriteRepository;
+            this._mappingSet451WriteRepository = mappingSet451WriteRepository;
+            this._mappingSet450WriteRepository = mappingSet450WriteRepository;
+            this._mappingSet444WriteRepository = mappingSet444WriteRepository;
             this._excelSheetNameRepository = excelSheetNameRepository;
             this._mappingSetGeneratorService = mappingSetGeneratorService;
 
@@ -277,6 +284,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             catch
             {
                 Log($"Source item list creating error");
+                throw;
             }
             finally
             {
@@ -344,15 +352,40 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                 var filePath = _fileDialog.SaveExcelFile();
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList, TurbineTypesSelectedItem);
-                    await _mappingSetWriteRepository.WriteDataAsync(filePath, mappingTagList);
+                    if (Enum.IsDefined(typeof(OneViewVersion), OneViewChosenVersion))
+                    {
+                        var mappingTagList = await _mappingSetGeneratorService.GetMappingSetAsync(_standardTagList, _sourceItemDictionary, _sourceItemList, TurbineTypesSelectedItem);
+                        // TODO: implement reflection for switch
+                        switch ((OneViewVersion)OneViewChosenVersion) 
+                        {
+                            case OneViewVersion.Ver_451:
+                                await _mappingSet451WriteRepository.WriteDataAsync(filePath, mappingTagList);
+                                break;
+                            case OneViewVersion.Ver_450:
+                                await _mappingSet450WriteRepository.WriteDataAsync(filePath, mappingTagList);
+                                break;
+                            case OneViewVersion.Ver_444:
+                                await _mappingSet444WriteRepository.WriteDataAsync(filePath, mappingTagList);
+                                break;
+                            case OneViewVersion.Ver_440:
+                                throw new NotImplementedException();
+                                break;
+                            default:
+                                LogError("OneView version not implemented yet");
+                                break;
+                        };
+                        Log($"Mapping set {(OneViewVersion)OneViewChosenVersion} created: {filePath}");
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
                 }
-                Log($"Mapping set created: {filePath}");
-                Log(OneViewVersion.ToString());
             }
             catch
             {
-                Log($"Mapping set creating error");
+                Log($"Mapping set {(OneViewVersion)OneViewChosenVersion} creating error");
+                throw;
             }
             finally
             {
@@ -364,7 +397,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             if (!string.IsNullOrEmpty(StandardTagListPath)
                 && !string.IsNullOrEmpty(SourceItemDictionaryPath)
                 && !string.IsNullOrEmpty(SourceItemListPath)
-                && OneViewVersion > 0
+                && Enum.IsDefined(typeof(OneViewVersion), OneViewChosenVersion)
                 )
             {
                 return true;
@@ -378,6 +411,11 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             var logStr = $"{time} | {log}";
             LoggerItems.Add(logStr);
             LoggerText += $"{logStr}{Environment.NewLine}";
+        }
+
+        private void LogError(string log)
+        {
+            Log($"ERROR: {log}");
         }
 
         private void LogNewError(object sender, NewErrorEventArgs e)

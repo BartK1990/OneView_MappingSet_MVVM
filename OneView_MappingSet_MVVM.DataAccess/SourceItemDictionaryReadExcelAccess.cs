@@ -10,25 +10,25 @@ namespace OneView_MappingSet_MVVM.DataAccess
         {
             SheetName = MappingSetGenerator.SourceItemDictionarySheetName; // Sheet name used in base class in GetExcelData
             // Excel sheet columns to read
-            columnsNamesToStructDict.Add("Turbine Type", "TurbineType");
-            columnsNamesToStructDict.Add("OneView IEC 61400-25-2 Edition 2", "Tagname");
-            columnsNamesToStructDict.Add("SourceItemIdentifier", "SourceItemIdentifier");
-            columnsNamesToStructDict.Add("SourceItemType", "SourceItemType ");
-            columnsNamesToStructDict.Add("SIType", "SiType ");
-            columnsNamesToStructDict.Add("CollectorType", "CollectorType ");
-            columnsNamesToStructDict.Add("ScaleFactor", "ScaleFactor");
-            columnsNamesToStructDict.Add("ScaleOffset", "ScaleOffset");
-            columnsNamesToStructDict.Add("Operation", "Operation");
-            columnsNamesToStructDict.Add("IsStatusTag", "IsStatusTag");
-            columnsNamesToStructDict.Add("QualityCondition", "QualityCondition");
-            columnsNamesToStructDict.Add("ExpressionModel", "ExpressionModel");
-            columnsNamesToStructDict.Add("Read Expression Type", "ReadExpressionType");
-            columnsNamesToStructDict.Add("Read Expression MappingSetTagValueId", "ReadExpressionMappingSetTagValueId");
-            columnsNamesToStructDict.Add("Read Expression", "ReadExpression");
-            columnsNamesToStructDict.Add("Write Expression Type", "WriteExpressionType");
-            columnsNamesToStructDict.Add("Write Expression MappingSetTagValueId", "WriteExpressionMappingSetTagValueId");
-            columnsNamesToStructDict.Add("Write Expression", "WriteExpression");
-            columnsNamesToStructDict.Add("TagMapping", "TagMapping");
+            columnsNamesToClassDict.Add("Turbine Type", "TurbineType");
+            columnsNamesToClassDict.Add("OneView IEC 61400-25-2 Edition 2", "Tagname");
+            columnsNamesToClassDict.Add("SourceItemIdentifier", "SourceItemIdentifier");
+            columnsNamesToClassDict.Add("SourceItemType", "SourceItemType ");
+            columnsNamesToClassDict.Add("SIType", "SiType ");
+            columnsNamesToClassDict.Add("CollectorType", "CollectorType ");
+            columnsNamesToClassDict.Add("ScaleFactor", "ScaleFactor");
+            columnsNamesToClassDict.Add("ScaleOffset", "ScaleOffset");
+            columnsNamesToClassDict.Add("Operation", "Operation");
+            columnsNamesToClassDict.Add("IsStatusTag", "IsStatusTag");
+            columnsNamesToClassDict.Add("QualityCondition", "QualityCondition");
+            columnsNamesToClassDict.Add("ExpressionModel", "ExpressionModel");
+            columnsNamesToClassDict.Add("Read Expression Type", "ReadExpressionType");
+            columnsNamesToClassDict.Add("Read Expression MappingSetTagValueId", "ReadExpressionMappingSetTagValueId");
+            columnsNamesToClassDict.Add("Read Expression", "ReadExpression");
+            columnsNamesToClassDict.Add("Write Expression Type", "WriteExpressionType");
+            columnsNamesToClassDict.Add("Write Expression MappingSetTagValueId", "WriteExpressionMappingSetTagValueId");
+            columnsNamesToClassDict.Add("Write Expression", "WriteExpression");
+            columnsNamesToClassDict.Add("TagMapping", "TagMapping");
         }
 
         protected override SourceItemDictionary ReadSheetData(ExcelWorksheet worksheet)

@@ -91,20 +91,17 @@
                 <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2 2 2 2">
                     <Label>Version:</Label>
                     <DockPanel VerticalAlignment="Center">
-                        <RadioButton Content="3.1" Margin="0 0 4 0"
-                                     IsChecked="{Binding OneViewVersion, Converter={StaticResource IsCheckedToIntegerConverter}
-                            , ConverterParameter=31}"/>
                         <RadioButton Content="4.4.0" Margin="0 0 4 0"
-                                     IsChecked="{Binding OneViewVersion, Converter={StaticResource IsCheckedToIntegerConverter}
+                                     IsChecked="{Binding OneViewChosenVersion, Converter={StaticResource IsCheckedToIntegerConverter}
                             , ConverterParameter=440}"/>
                         <RadioButton Content="4.4.4" Margin="0 0 4 0"
-                                     IsChecked="{Binding OneViewVersion, Converter={StaticResource IsCheckedToIntegerConverter}
+                                     IsChecked="{Binding OneViewChosenVersion, Converter={StaticResource IsCheckedToIntegerConverter}
                             , ConverterParameter=444}"/>
                         <RadioButton Content="4.5.0" Margin="0 0 4 0"
-                                     IsChecked="{Binding OneViewVersion, Converter={StaticResource IsCheckedToIntegerConverter}
+                                     IsChecked="{Binding OneViewChosenVersion, Converter={StaticResource IsCheckedToIntegerConverter}
                             , ConverterParameter=450}"/>
                         <RadioButton Content="4.5.1" Margin="0 0 4 0"
-                                     IsChecked="{Binding OneViewVersion, Converter={StaticResource IsCheckedToIntegerConverter}
+                                     IsChecked="{Binding OneViewChosenVersion, Converter={StaticResource IsCheckedToIntegerConverter}
                             , ConverterParameter=451}"/>
                     </DockPanel>
                 </DockPanel>

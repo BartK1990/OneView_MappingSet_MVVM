@@ -25,7 +25,9 @@ namespace OneView_MappingSet_MVVM.UI.View
                 , sourceItemDictionaryRepository: curApp.SourceItemDictionaryReadRepository
                 , sourceItemListRepository: curApp.SourceItemListReadRepository
                 , sourceItemListWriteRepository: curApp.SourceItemListWriteRepository
-                , mappingSetWriteRepository: curApp.MappingSetWriteRepository
+                , mappingSet451WriteRepository: curApp.MappingSet451WriteRepository
+                , mappingSet450WriteRepository: curApp.MappingSet450WriteRepository
+                , mappingSet444WriteRepository: curApp.MappingSet444WriteRepository
                 , excelSheetNameRepository: curApp.ExcelSheetNameRepository);
 
             //Only one view for now

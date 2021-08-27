@@ -10,14 +10,17 @@ namespace OneView_MappingSet_MVVM.DataAccess
         {
             SheetName = MappingSetGenerator.StandardTagListSheetName; // Sheet name used in base class in GetExcelData   
             // Excel sheet columns to read
-            columnsNamesToStructDict.Add("OneView IEC 61400-25-2 Edition 2", "Tagname");
-            columnsNamesToStructDict.Add("Presentation Name\n(English)", "PresentationName");
-            columnsNamesToStructDict.Add("Description", "Description");
-            columnsNamesToStructDict.Add("OV SI Type", "OvSiType");
-            columnsNamesToStructDict.Add("SI Unit", "SiUnit");
-            columnsNamesToStructDict.Add("Type", "Type");
-            columnsNamesToStructDict.Add("DataType", "DataType");
-            columnsNamesToStructDict.Add("CollectorType", "CollectorType");
+            columnsNamesToClassDict.Add("OneView IEC 61400-25-2 Edition 2", "Tagname");
+            columnsNamesToClassDict.Add("Presentation Name\n(English)", "PresentationNameEnglish");
+            columnsNamesToClassDict.Add("Presentation Name\n(German)", "PresentationNameGerman");
+            columnsNamesToClassDict.Add("Presentation Name\n(Spanish)", "PresentationNameSpanish");
+            columnsNamesToClassDict.Add("Presentation Name\n(Polish)", "PresentationNamePolish");
+            columnsNamesToClassDict.Add("Description", "Description");
+            columnsNamesToClassDict.Add("OV SI Type", "OvSiType");
+            columnsNamesToClassDict.Add("SI Unit", "SiUnit");
+            columnsNamesToClassDict.Add("Type", "Type");
+            columnsNamesToClassDict.Add("DataType", "DataType");
+            columnsNamesToClassDict.Add("CollectorType", "CollectorType");
         }
 
         protected override StandardTagList ReadSheetData(ExcelWorksheet worksheet)

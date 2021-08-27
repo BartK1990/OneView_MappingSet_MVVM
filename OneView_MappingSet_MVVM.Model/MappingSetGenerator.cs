@@ -128,7 +128,10 @@ namespace OneView_MappingSet_MVVM.Model
 
         private void Iec6140025TagToMappingTag(Iec6140025Tag iecTag, MappingTag mappingTag)
         {
-            mappingTag.PresentationName = iecTag.PresentationName;
+            mappingTag.PresentationNameEnglish = iecTag.PresentationNameEnglish;
+            mappingTag.PresentationNameGerman = iecTag.PresentationNameGerman;
+            mappingTag.PresentationNameSpanish = iecTag.PresentationNameSpanish;
+            mappingTag.PresentationNamePolish = iecTag.PresentationNamePolish;
             mappingTag.SiType = iecTag.OvSiType;
             mappingTag.DataType = iecTag.DataType;
             mappingTag.Description = iecTag.Description;
@@ -143,6 +146,9 @@ namespace OneView_MappingSet_MVVM.Model
             mappingTag.CollectorType = dictionaryItem.CollectorType;
             mappingTag.ScaleFactor = dictionaryItem.ScaleFactor;
             mappingTag.ScaleOffset = dictionaryItem.ScaleOffset;
+            mappingTag.Operation = dictionaryItem.Operation;
+            mappingTag.IsStatusTag = dictionaryItem.IsStatusTag;
+            mappingTag.QualityCondition = dictionaryItem.QualityCondition;
             mappingTag.Operation = dictionaryItem.Operation;
             mappingTag.ExpressionModel = dictionaryItem.ExpressionModel;
             mappingTag.ReadExpressionType = dictionaryItem.ReadExpressionType;

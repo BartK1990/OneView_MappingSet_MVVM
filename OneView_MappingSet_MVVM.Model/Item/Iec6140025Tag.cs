@@ -6,7 +6,10 @@ namespace OneView_MappingSet_MVVM.Model
     public class Iec6140025Tag : IEquatable<Iec6140025Tag>
     {
         public string Tagname { get; set; }
-        public string PresentationName { get; set; }
+        public string PresentationNameEnglish { get; set; }
+        public string PresentationNameGerman { get; set; }
+        public string PresentationNameSpanish { get; set; }
+        public string PresentationNamePolish { get; set; }
         public string Description { get; set; }
         public string OvSiType { get; set; }
         public string SiUnit { get; set; }
@@ -19,7 +22,10 @@ namespace OneView_MappingSet_MVVM.Model
             if (other == null)
                 return false;
             if (this.Tagname == other.Tagname
-                && this.PresentationName == other.PresentationName
+                && this.PresentationNameEnglish == other.PresentationNameEnglish
+                && this.PresentationNameGerman == other.PresentationNameGerman
+                && this.PresentationNameSpanish == other.PresentationNameSpanish
+                && this.PresentationNamePolish == other.PresentationNamePolish
                 && this.Description == other.Description
                 && this.OvSiType == other.OvSiType
                 && this.SiUnit == other.SiUnit

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace OneView_MappingSet_MVVM.UI.Data.Repositories
 {
-    public class MappingSetWriteRepository : ExcelRepository<MappingTagList, MappingSetCreateExcelAccess>, IMappingSetWriteRepository
+    public class MappingSet450WriteRepository : ExcelRepository<MappingTagList, MappingSet450CreateExcelAccess>, IMappingSetWriteRepository
     {
-        public MappingSetWriteRepository(MappingSetCreateExcelAccess excelAccess) : base(excelAccess)
+        public MappingSet450WriteRepository(MappingSet450CreateExcelAccess excelAccess) : base(excelAccess)
         {
         }
 

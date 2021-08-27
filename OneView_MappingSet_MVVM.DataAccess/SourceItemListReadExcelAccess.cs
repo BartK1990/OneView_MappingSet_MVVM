@@ -10,7 +10,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
         {
             SheetName = MappingSetGenerator.SourceItemListSheetName; // Sheet name used in base class in GetExcelData
             // Excel sheet columns to read
-            columnsNamesToStructDict.Add("SourceItemIdentifier", "SourceItemIdentifier");
+            columnsNamesToClassDict.Add("SourceItemIdentifier", "SourceItemIdentifier");
         }
 
         protected override SourceItemList ReadSheetData(ExcelWorksheet worksheet)

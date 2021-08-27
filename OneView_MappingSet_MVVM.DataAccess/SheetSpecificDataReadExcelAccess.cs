@@ -8,7 +8,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
 {
     public abstract class SheetSpecificDataReadExcelAccess<T,TItem> : SheetDataReadExcelAccess<T>
     {
-        protected readonly Dictionary<string, string> columnsNamesToStructDict = new Dictionary<string, string>();
+        protected readonly Dictionary<string, string> columnsNamesToClassDict = new Dictionary<string, string>();
 
         protected Dictionary<int, string> _columnsNumbersToStructDict;
 
@@ -22,19 +22,19 @@ namespace OneView_MappingSet_MVVM.DataAccess
             for (int colNumCnt = 1; colNumCnt <= maxColumn; colNumCnt++)
             {
                 var cellValue = GetCellValue(worksheet.Cells[1, colNumCnt].Value);
-                if (columnsNamesToStructDict.ContainsKey(cellValue))
+                if (columnsNamesToClassDict.ContainsKey(cellValue))
                 {
-                    _columnsNumbersToStructDict.Add(colNumCnt, columnsNamesToStructDict[cellValue]);
+                    _columnsNumbersToStructDict.Add(colNumCnt, columnsNamesToClassDict[cellValue]);
                 }
-                if (columnsNamesToStructDict.Count <= _columnsNumbersToStructDict.Count) // If all columns found stop searching
+                if (columnsNamesToClassDict.Count <= _columnsNumbersToStructDict.Count) // If all columns found stop searching
                 {
                     break;
                 }
             }
 
-            if (columnsNamesToStructDict.Count > _columnsNumbersToStructDict.Count) // If not all columns found file is invalid - return empty collection
+            if (columnsNamesToClassDict.Count > _columnsNumbersToStructDict.Count) // If not all columns found file is invalid - return empty collection
             {
-                var missingColumns = columnsNamesToStructDict.Values.Except(_columnsNumbersToStructDict.Values);
+                var missingColumns = columnsNamesToClassDict.Values.Except(_columnsNumbersToStructDict.Values);
                 var exMessage = missingColumns.Aggregate((a, b) => $"{a}, {b}");
                 throw new InvalidExcelSheetException($"There are missing columns in the worksheet: {exMessage}");
             }
