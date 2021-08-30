@@ -28,6 +28,7 @@ namespace OneView_MappingSet_MVVM.UI.View
                 , mappingSet451WriteRepository: curApp.MappingSet451WriteRepository
                 , mappingSet450WriteRepository: curApp.MappingSet450WriteRepository
                 , mappingSet444WriteRepository: curApp.MappingSet444WriteRepository
+                , mappingSet440WriteRepository: curApp.MappingSet440WriteRepository
                 , excelSheetNameRepository: curApp.ExcelSheetNameRepository);
 
             //Only one view for now

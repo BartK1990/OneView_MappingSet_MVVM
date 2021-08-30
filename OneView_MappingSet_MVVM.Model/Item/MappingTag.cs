@@ -20,7 +20,10 @@ namespace OneView_MappingSet_MVVM.Model.Item
         public string ScaleOffset { get; set; }
         public string Operation { get; set; }
         public string IsStatusTag { get; set; }
+        public string ConsiderConditions { get; set; }
         public string QualityCondition { get; set; }
+        public string ConsiderValue { get; set; }
+        public string ValueCondition { get; set; }
         public string ExpressionModel { get; set; }
         public string ReadExpressionType { get; set; }
         public string ReadExpressionMappingSetTagValueId { get; set; }
@@ -49,7 +52,10 @@ namespace OneView_MappingSet_MVVM.Model.Item
                 && this.ScaleOffset == other.ScaleOffset
                 && this.Operation == other.Operation
                 && this.IsStatusTag == other.IsStatusTag
+                && this.ConsiderConditions == other.ConsiderConditions
                 && this.QualityCondition == other.QualityCondition
+                && this.ConsiderValue == other.ConsiderValue
+                && this.ValueCondition == other.ValueCondition
                 && this.ExpressionModel == other.ExpressionModel
                 && this.ReadExpressionType == other.ReadExpressionType
                 && this.ReadExpressionMappingSetTagValueId == other.ReadExpressionMappingSetTagValueId

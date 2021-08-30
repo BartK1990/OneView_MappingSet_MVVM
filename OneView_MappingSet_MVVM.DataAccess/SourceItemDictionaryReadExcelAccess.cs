@@ -20,7 +20,10 @@ namespace OneView_MappingSet_MVVM.DataAccess
             columnsNamesToClassDict.Add("ScaleOffset", "ScaleOffset");
             columnsNamesToClassDict.Add("Operation", "Operation");
             columnsNamesToClassDict.Add("IsStatusTag", "IsStatusTag");
+            columnsNamesToClassDict.Add("ConsiderConditions", "ConsiderConditions");
             columnsNamesToClassDict.Add("QualityCondition", "QualityCondition");
+            columnsNamesToClassDict.Add("ConsiderValue", "ConsiderValue");
+            columnsNamesToClassDict.Add("ValueCondition", "ValueCondition");
             columnsNamesToClassDict.Add("ExpressionModel", "ExpressionModel");
             columnsNamesToClassDict.Add("Read Expression Type", "ReadExpressionType");
             columnsNamesToClassDict.Add("Read Expression MappingSetTagValueId", "ReadExpressionMappingSetTagValueId");

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace OneView_MappingSet_MVVM.DataAccess
 {
-    public class MappingSet444CreateExcelAccess : ExcelAccessCreate<MappingTagList>
+    public class MappingSet440CreateExcelAccess : ExcelAccessCreate<MappingTagList>
     {
         private static readonly List<MappingSetExcelColumn> MappingSetExcelColumns = new List<MappingSetExcelColumn>
         {
@@ -24,15 +24,18 @@ namespace OneView_MappingSet_MVVM.DataAccess
             ,{ new MappingSetExcelColumn(11, mappingTagPropertyName: "ScaleOffset", "ScaleOffset", "Green") }
             ,{ new MappingSetExcelColumn(12, mappingTagPropertyName: "Operation", "Operation", "Green") }
             ,{ new MappingSetExcelColumn(13, mappingTagPropertyName: "IsStatusTag", "IsStatusTag", "Green") }
-            ,{ new MappingSetExcelColumn(14, mappingTagPropertyName: "QualityCondition", "QualityCondition", "Green") }
-            ,{ new MappingSetExcelColumn(15, mappingTagPropertyName: "ExpressionModel", "ExpressionModel", "Green") }
-            ,{ new MappingSetExcelColumn(16, mappingTagPropertyName: "ReadExpressionType", "Type", "Green") }
-            ,{ new MappingSetExcelColumn(17, mappingTagPropertyName: "ReadExpressionMappingSetTagValueId", "MappingSetTagValueId", "Green") }
-            ,{ new MappingSetExcelColumn(18, mappingTagPropertyName: "ReadExpression", "Expression", "Green") }
-            ,{ new MappingSetExcelColumn(19, mappingTagPropertyName: "WriteExpressionType", "Type", "Green") }
-            ,{ new MappingSetExcelColumn(20, mappingTagPropertyName: "WriteExpressionType", "MappingSetTagValueId", "Green") }
-            ,{ new MappingSetExcelColumn(21, mappingTagPropertyName: "WriteExpression", "Expression", "Green") }
-            ,{ new MappingSetExcelColumn(22, mappingTagPropertyName: "TagMapping", "TagMapping", "Green") }
+            ,{ new MappingSetExcelColumn(14, mappingTagPropertyName: "ConsiderConditions", "ConsiderConditions", "Green") }
+            ,{ new MappingSetExcelColumn(15, mappingTagPropertyName: "QualityCondition", "QualityCondition", "Green") }
+            ,{ new MappingSetExcelColumn(16, mappingTagPropertyName: "ConsiderValue", "ConsiderValue", "Green") }
+            ,{ new MappingSetExcelColumn(17, mappingTagPropertyName: "ValueCondition", "ValueCondition", "Green") }
+            ,{ new MappingSetExcelColumn(18, mappingTagPropertyName: "ExpressionModel", "ExpressionModel", "Green") }
+            ,{ new MappingSetExcelColumn(19, mappingTagPropertyName: "ReadExpressionType", "Type", "Green") }
+            ,{ new MappingSetExcelColumn(20, mappingTagPropertyName: "ReadExpressionMappingSetTagValueId", "MappingSetTagValueId", "Green") }
+            ,{ new MappingSetExcelColumn(21, mappingTagPropertyName: "ReadExpression", "Expression", "Green") }
+            ,{ new MappingSetExcelColumn(22, mappingTagPropertyName: "WriteExpressionType", "Type", "Green") }
+            ,{ new MappingSetExcelColumn(23, mappingTagPropertyName: "WriteExpressionType", "MappingSetTagValueId", "Green") }
+            ,{ new MappingSetExcelColumn(24, mappingTagPropertyName: "WriteExpression", "Expression", "Green") }
+            ,{ new MappingSetExcelColumn(25, mappingTagPropertyName: "TagMapping", "TagMapping", "Green") }
         };
 
         protected override void PutExcelData(ExcelPackage package, MappingTagList data)
@@ -65,15 +68,15 @@ namespace OneView_MappingSet_MVVM.DataAccess
                 ws.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 ws.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(greenHtmlColor));
 
-                ws.Cells[1, 16].Value = "ExpressionModel2123";
-                ws.Cells[1, 16, 1, 18].Merge = true;
-                ws.Cells[1, 16].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[1, 16].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(greenHtmlColor));
-
-                ws.Cells[1, 19].Value = "WriteExpression";
+                ws.Cells[1, 19].Value = "ExpressionModel2123";
                 ws.Cells[1, 19, 1, 21].Merge = true;
                 ws.Cells[1, 19].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 ws.Cells[1, 19].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(greenHtmlColor));
+
+                ws.Cells[1, 22].Value = "WriteExpression";
+                ws.Cells[1, 22, 1, 24].Merge = true;
+                ws.Cells[1, 22].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[1, 22].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(greenHtmlColor));
 
                 foreach (var mappingSetCol in MappingSetExcelColumns)
                 {
@@ -81,10 +84,10 @@ namespace OneView_MappingSet_MVVM.DataAccess
                 }
 
                 // Border
-                ws.Cells[2, 1, 2, 22].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                ws.Cells[2, 1, 2, 22].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                ws.Cells[2, 1, 2, 22].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[2, 1, 2, 22].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1, 2, 25].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1, 2, 25].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1, 2, 25].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1, 2, 25].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             }
         }
     }

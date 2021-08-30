@@ -26,6 +26,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
         private readonly IMappingSetWriteRepository _mappingSet451WriteRepository;
         private readonly IMappingSetWriteRepository _mappingSet450WriteRepository;
         private readonly IMappingSetWriteRepository _mappingSet444WriteRepository;
+        private readonly IMappingSetWriteRepository _mappingSet440WriteRepository;
         private readonly IExcelSheetNameRepository _excelSheetNameRepository;
 
         private StandardTagList _standardTagList;
@@ -125,6 +126,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             , IMappingSetWriteRepository mappingSet451WriteRepository
             , IMappingSetWriteRepository mappingSet450WriteRepository
             , IMappingSetWriteRepository mappingSet444WriteRepository
+            , IMappingSetWriteRepository mappingSet440WriteRepository
             , IExcelSheetNameRepository excelSheetNameRepository
             )
         {
@@ -138,6 +140,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
             this._mappingSet451WriteRepository = mappingSet451WriteRepository;
             this._mappingSet450WriteRepository = mappingSet450WriteRepository;
             this._mappingSet444WriteRepository = mappingSet444WriteRepository;
+            this._mappingSet440WriteRepository = mappingSet440WriteRepository;
             this._excelSheetNameRepository = excelSheetNameRepository;
             this._mappingSetGeneratorService = mappingSetGeneratorService;
 
@@ -368,7 +371,7 @@ namespace OneView_MappingSet_MVVM.UI.ViewModel
                                 await _mappingSet444WriteRepository.WriteDataAsync(filePath, mappingTagList);
                                 break;
                             case OneViewVersion.Ver_440:
-                                throw new NotImplementedException();
+                                await _mappingSet440WriteRepository.WriteDataAsync(filePath, mappingTagList);
                                 break;
                             default:
                                 LogError("OneView version not implemented yet");

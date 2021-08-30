@@ -148,7 +148,10 @@ namespace OneView_MappingSet_MVVM.Model
             mappingTag.ScaleOffset = dictionaryItem.ScaleOffset;
             mappingTag.Operation = dictionaryItem.Operation;
             mappingTag.IsStatusTag = dictionaryItem.IsStatusTag;
+            mappingTag.ConsiderConditions = dictionaryItem.ConsiderConditions;
             mappingTag.QualityCondition = dictionaryItem.QualityCondition;
+            mappingTag.ConsiderValue = dictionaryItem.ConsiderValue;
+            mappingTag.ValueCondition = dictionaryItem.ValueCondition;
             mappingTag.Operation = dictionaryItem.Operation;
             mappingTag.ExpressionModel = dictionaryItem.ExpressionModel;
             mappingTag.ReadExpressionType = dictionaryItem.ReadExpressionType;

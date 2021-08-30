@@ -28,7 +28,7 @@ namespace OneView_MappingSet_MVVM.DataAccess
             ,{ new MappingSetExcelColumn(15, mappingTagPropertyName: "Operation", "Operation", "Green") }
             ,{ new MappingSetExcelColumn(16, mappingTagPropertyName: string.Empty, "IsStatusTag\n(depricated)", "Red") }
             ,{ new MappingSetExcelColumn(17, mappingTagPropertyName: string.Empty, "QualityCondition\n(depricated)", "Red") }
-            ,{ new MappingSetExcelColumn(18, mappingTagPropertyName: "ExpressionModel", "ExpressionModel2123", "Green") }
+            ,{ new MappingSetExcelColumn(18, mappingTagPropertyName: "ExpressionModel", "ExpressionModel", "Green") }
             ,{ new MappingSetExcelColumn(19, mappingTagPropertyName: "ReadExpressionType", "Type", "Green") }
             ,{ new MappingSetExcelColumn(20, mappingTagPropertyName: "ReadExpressionMappingSetTagValueId", "MappingSetTagValueId", "Green") }
             ,{ new MappingSetExcelColumn(21, mappingTagPropertyName: "ReadExpression", "Expression", "Green") }
